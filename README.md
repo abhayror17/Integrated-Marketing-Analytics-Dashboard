@@ -2,8 +2,6 @@
 
 A comprehensive, real-time marketing analytics dashboard built with modern web technologies. This dashboard provides integrated insights across all marketing channels with advanced data visualization, audience segmentation, and automated reporting capabilities.
 
-![Dashboard Preview](https://abhayror17.github.io/Integrated-Marketing-Analytics-Dashboard/)
-
 ## 🚀 Features
 
 ### 📊 **Real-Time Analytics Dashboard**
