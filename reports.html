@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Reports & Analytics</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#428bf0",
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#0F172A",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1E293B",
+                        "text-light": "#111827",
+                        "text-dark": "#E5E7EB",
+                        "border-light": "#E2E8F0",
+                        "border-dark": "#374151",
+                        "subtle-text-light": "#64748B",
+                        "subtle-text-dark": "#94A3B8"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "Roboto", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px" },
+                    boxShadow: {
+                        'sm': '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+                        'DEFAULT': '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+                        'md': '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+                        'lg': '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1)',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-in-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-subtle': 'bounceSubtle 2s infinite',
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounceSubtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 25%, #a855f7 50%, #c084fc 75%, #e879f9 100%);
+        }
+        
+        .metric-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+        
+        .dark .metric-card {
+            background: linear-gradient(145deg, #1e293b 0%, #334155 100%);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chart-container {
+            background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+        
+        .dark .chart-container {
+            background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid rgba(55, 65, 81, 0.5);
+        }
+        
+        .report-card {
+            background: linear-gradient(90deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+            border-left: 4px solid #6366f1;
+        }
+        
+        .dark .report-card {
+            background: linear-gradient(90deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+        }
+        
+        .pulse-ring {
+            animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.33); }
+            80%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="flex w-64 flex-col border-r border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-4">
+             <div class="flex-shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAe1DuBqgz-Dwzu6hPDQwfhWeHZnB0RG99sLofEPVPjidVTASZwxNy87zjeElIoFK2VzO-xiNqmgJZAmGOs9CtRkTZdk_XDLwJLPh9a6Ayhd1Ny_NPNoj0XZy6Xu99spoMz4rnkc4yHWeB-buhibpyow8DSctTZYGnXOm6_AHW8lGiOxZkvquZnETyzcK92b_gsspxWUF4VEIjw3OTNAjOP-WtJCvHysrmTLslbIKYB_LDHTd21IFECqk2W6OOPncmPq3VYTrHDrWY");'></div>
+                    <div class="flex flex-col">
+                        <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">Marketing Co.</h1>
+                        <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-normal leading-normal">Workspace</p>
+                    </div>
+                </div>
+                <nav class="mt-8 flex flex-col gap-2">
+                    <a class="flex items-center gap-3 px-3 py-2 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg" href="index.html"><span class="material-symbols-outlined">dashboard</span><p class="text-sm font-medium leading-normal">Dashboard</p></a>
+                    <a class="flex items-center gap-3 px-3 py-2 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg" href="campaign.html"><span class="material-symbols-outlined">campaign</span><p class="text-sm font-medium leading-normal">Campaigns</p></a>
+                    <a class="flex items-center gap-3 px-3 py-2 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg" href="audience.html"><span class="material-symbols-outlined">groups</span><p class="text-sm font-medium leading-normal">Audience</p></a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary" href="reports.html"><span class="material-symbols-outlined">analytics</span><p class="text-sm font-medium leading-normal">Reports</p></a>
+                </nav>
+            </div>
+            <div class="mt-auto flex flex-col gap-2">
+                <a class="flex items-center gap-3 px-3 py-2 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg" href="#"><span class="material-symbols-outlined">settings</span><p class="text-sm font-medium leading-normal">Settings</p></a>
+                <a class="flex items-center gap-3 px-3 py-2 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg" href="#"><span class="material-symbols-outlined">help</span><p class="text-sm font-medium leading-normal">Support</p></a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto">
+            <div class="p-6 lg:p-8 space-y-8 animate-fade-in">
+                <!-- Enhanced Header -->
+                <div class="gradient-bg rounded-2xl p-8 text-white relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-32 translate-x-32"></div>
+                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full translate-y-24 -translate-x-24"></div>
+                    <div class="absolute top-1/2 left-1/2 w-96 h-96 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 pulse-ring"></div>
+                    <div class="relative z-10">
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <div class="flex flex-col gap-3">
+                                <h1 class="text-4xl font-bold leading-tight tracking-tight">Reports & Analytics</h1>
+                                <p class="text-white/90 text-lg font-normal leading-relaxed">Generate comprehensive reports and export your marketing data with advanced analytics</p>
+                                <div class="flex items-center gap-6 text-white/80">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg animate-bounce-subtle">trending_up</span>
+                                        <span class="text-sm font-medium">247 Reports Generated This Month</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">download</span>
+                                        <span class="text-sm font-medium">2.3GB Exported Data</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">schedule</span>
+                                        <span class="text-sm font-medium">32 Scheduled Reports</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button id="theme-toggle" class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white/20 text-white border border-white/30 text-sm font-medium leading-normal hover:bg-white/30 backdrop-blur-sm">
+                                    <span id="theme-icon" class="material-symbols-outlined text-base">light_mode</span>
+                                    <span id="theme-text">Light</span>
+                                </button>
+                                <button id="share-btn" class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white/20 text-white border border-white/30 text-sm font-medium leading-normal hover:bg-white/30 backdrop-blur-sm"><span class="material-symbols-outlined text-base">share</span><span>Share</span></button>
+                                <button id="ai-insights-btn" class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white text-primary text-sm font-medium leading-normal hover:bg-gray-100 shadow-sm"><span class="material-symbols-outlined text-base">auto_awesome</span><span>AI Insights</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enhanced Quick Stats Cards -->
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 animate-slide-up">
+                    <div class="metric-card rounded-xl p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Total Reports</p>
+                                <div class="flex items-baseline gap-2">
+                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">247</p>
+                                    <p class="text-green-500 text-sm font-medium">+12 this week</p>
+                                </div>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-2xl animate-pulse-slow">assessment</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="metric-card rounded-xl p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Active Templates</p>
+                                <div class="flex items-baseline gap-2">
+                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">18</p>
+                                    <p class="text-green-500 text-sm font-medium">+3 this month</p>
+                                </div>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-500/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-2xl">description</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="metric-card rounded-xl p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Scheduled Reports</p>
+                                <div class="flex items-baseline gap-2">
+                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">32</p>
+                                    <p class="text-blue-500 text-sm font-medium">8 weekly, 24 monthly</p>
+                                </div>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-2xl">schedule</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="metric-card rounded-xl p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Data Sources</p>
+                                <div class="flex items-baseline gap-2">
+                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">7</p>
+                                    <p class="text-green-500 text-sm font-medium">All connected</p>
+                                </div>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-2xl">hub</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="metric-card rounded-xl p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Export Volume</p>
+                                <div class="flex items-baseline gap-2">
+                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">2.3GB</p>
+                                    <p class="text-green-500 text-sm font-medium">+450MB this week</p>
+                                </div>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-2xl">storage</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="metric-card rounded-xl p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Success Rate</p>
+                                <div class="flex items-baseline gap-2">
+                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">98.7%</p>
+                                    <p class="text-green-500 text-sm font-medium">+0.2%</p>
+                                </div>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-pink-100 dark:bg-pink-500/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-pink-600 dark:text-pink-400 text-2xl">verified</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                    <!-- Enhanced Report Generation Panel -->
+                    <div class="xl:col-span-1 space-y-6">
+                        <!-- Quick Report Builder -->
+                        <div class="chart-container rounded-2xl border border-border-light dark:border-border-dark p-6 shadow-sm">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-white text-xl">add_circle</span>
+                                </div>
+                                <div>
+                                    <h2 class="text-xl font-semibold text-text-light dark:text-text-dark">Quick Report Builder</h2>
+                                    <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">Create custom reports in seconds</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Report Name</label>
+                                    <input class="w-full rounded-lg border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800/50 text-text-light dark:text-text-dark shadow-sm focus:border-primary focus:ring-primary px-3 py-2" id="report-name" placeholder="e.g., Q3 Performance Summary" type="text"/>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Date Range</label>
+                                        <select class="w-full rounded-lg border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800/50 text-text-light dark:text-text-dark shadow-sm focus:border-primary focus:ring-primary px-3 py-2 text-sm" id="date-range">
+                                            <option>Last 7 Days</option>
+                                            <option>Last 30 Days</option>
+                                            <option>Last 90 Days</option>
+                                            <option>This Quarter</option>
+                                            <option>Last Quarter</option>
+                                            <option>This Year</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Format</label>
+                                        <select class="w-full rounded-lg border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800/50 text-text-light dark:text-text-dark shadow-sm focus:border-primary focus:ring-primary px-3 py-2 text-sm" id="export-format">
+                                            <option>PDF</option>
+                                            <option>Excel (XLSX)</option>
+                                            <option>CSV</option>
+                                            <option>PowerPoint</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Data Sources</label>
+                                    <div class="space-y-3">
+                                        <label class="flex items-center gap-3 cursor-pointer group">
+                                            <input type="checkbox" class="rounded border-border-light dark:border-border-dark text-primary focus:ring-primary" checked>
+                                            <span class="text-sm text-text-light dark:text-text-dark group-hover:text-primary transition-colors">Campaign Performance</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 cursor-pointer group">
+                                            <input type="checkbox" class="rounded border-border-light dark:border-border-dark text-primary focus:ring-primary" checked>
+                                            <span class="text-sm text-text-light dark:text-text-dark group-hover:text-primary transition-colors">Audience Analytics</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 cursor-pointer group">
+                                            <input type="checkbox" class="rounded border-border-light dark:border-border-dark text-primary focus:ring-primary">
+                                            <span class="text-sm text-text-light dark:text-text-dark group-hover:text-primary transition-colors">Financial Data</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 cursor-pointer group">
+                                            <input type="checkbox" class="rounded border-border-light dark:border-border-dark text-primary focus:ring-primary">
+                                            <span class="text-sm text-text-light dark:text-text-dark group-hover:text-primary transition-colors">Competitor Analysis</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-3 pt-4">
+                                    <button class="generate-report-btn flex-1 flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-3 text-sm font-semibold text-white hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg">
+                                        <span class="material-symbols-outlined text-base">play_arrow</span>
+                                        Generate Report
+                                    </button>
+                                    <button class="schedule-report-btn flex items-center justify-center gap-2 rounded-lg bg-gray-200 dark:bg-gray-700 px-4 py-3 text-sm font-semibold text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                                        <span class="material-symbols-outlined text-base">schedule</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Enhanced Report Templates -->
+                        <div class="chart-container rounded-2xl border border-border-light dark:border-border-dark p-6 shadow-sm">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-white text-xl">category</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Report Templates</h3>
+                                    <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">Pre-configured report layouts</p>
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <button class="template-btn w-full text-left p-4 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-500/10 dark:hover:to-purple-500/10 transition-all duration-200 group border border-transparent hover:border-blue-200 dark:hover:border-blue-700">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
+                                                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-sm">description</span>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold text-text-light dark:text-text-dark group-hover:text-blue-600 dark:group-hover:text-blue-400">Executive Summary</p>
+                                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">High-level KPIs and performance overview</p>
+                                            </div>
+                                        </div>
+                                        <span class="material-symbols-outlined text-subtle-text-light dark:text-subtle-text-dark group-hover:text-blue-500">chevron_right</span>
+                                    </div>
+                                </button>
+                                <button class="template-btn w-full text-left p-4 rounded-xl hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 dark:hover:from-green-500/10 dark:hover:to-emerald-500/10 transition-all duration-200 group border border-transparent hover:border-green-200 dark:hover:border-green-700">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-lg bg-green-100 dark:bg-green-500/20 flex items-center justify-center">
+                                                <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-sm">campaign</span>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold text-text-light dark:text-text-dark group-hover:text-green-600 dark:group-hover:text-green-400">Campaign Deep Dive</p>
+                                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Detailed campaign performance analysis</p>
+                                            </div>
+                                        </div>
+                                        <span class="material-symbols-outlined text-subtle-text-light dark:text-subtle-text-dark group-hover:text-green-500">chevron_right</span>
+                                    </div>
+                                </button>
+                                <button class="template-btn w-full text-left p-4 rounded-xl hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 dark:hover:from-purple-500/10 dark:hover:to-pink-500/10 transition-all duration-200 group border border-transparent hover:border-purple-200 dark:hover:border-purple-700">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center">
+                                                <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-sm">groups</span>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold text-text-light dark:text-text-dark group-hover:text-purple-600 dark:group-hover:text-purple-400">Audience Insights</p>
+                                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Demographics and behavior analysis</p>
+                                            </div>
+                                        </div>
+                                        <span class="material-symbols-outlined text-subtle-text-light dark:text-subtle-text-dark group-hover:text-purple-500">chevron_right</span>
+                                    </div>
+                                </button>
+                                <button class="template-btn w-full text-left p-4 rounded-xl hover:bg-gradient-to-r hover:from-orange-50 hover:to-yellow-50 dark:hover:from-orange-500/10 dark:hover:to-yellow-500/10 transition-all duration-200 group border border-transparent hover:border-orange-200 dark:hover:border-orange-700">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-lg bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center">
+                                                <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-sm">trending_up</span>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold text-text-light dark:text-text-dark group-hover:text-orange-600 dark:group-hover:text-orange-400">ROI Analysis</p>
+                                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Return on investment breakdown</p>
+                                            </div>
+                                        </div>
+                                        <span class="material-symbols-outlined text-subtle-text-light dark:text-subtle-text-dark group-hover:text-orange-500">chevron_right</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- AI-Powered Insights -->
+                        <div class="chart-container rounded-2xl border border-border-light dark:border-border-dark p-6 shadow-sm">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-pink-500 to-violet-600 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-white text-xl">auto_awesome</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">AI Insights</h3>
+                                    <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">Automated analysis suggestions</p>
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="p-3 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-500/10 dark:to-purple-500/10 border border-blue-200 dark:border-blue-700">
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-blue-500 text-lg">lightbulb</span>
+                                        <div>
+                                            <p class="text-sm font-medium text-text-light dark:text-text-dark">Optimization Opportunity</p>
+                                            <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Consider reallocating budget from underperforming campaigns to boost ROI by 15%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-3 rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-500/10 dark:to-emerald-500/10 border border-green-200 dark:border-green-700">
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-green-500 text-lg">check_circle</span>
+                                        <div>
+                                            <p class="text-sm font-medium text-text-light dark:text-text-dark">Performance Trend</p>
+                                            <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Mobile engagement increased 23% this month - consider mobile-first strategies</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-3 rounded-lg bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-500/10 dark:to-yellow-500/10 border border-orange-200 dark:border-orange-700">
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-orange-500 text-lg">warning</span>
+                                        <div>
+                                            <p class="text-sm font-medium text-text-light dark:text-text-dark">Attention Required</p>
+                                            <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">3 campaigns show declining CTR - review targeting and creative elements</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Generated Reports & Analytics -->
+                    <div class="xl:col-span-2 space-y-6">
+                        <!-- Report Analytics Charts -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <!-- Report Usage Trends -->
+                            <div class="chart-container rounded-2xl border border-border-light dark:border-border-dark p-6 shadow-sm">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div>
+                                        <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Report Usage Trends</h3>
+                                        <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">Usage patterns over time</p>
+                                    </div>
+                                    <span class="material-symbols-outlined text-blue-500 text-xl">trending_up</span>
+                                </div>
+                                <div class="h-64">
+                                    <canvas id="reportUsageChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Export Format Distribution -->
+                            <div class="chart-container rounded-2xl border border-border-light dark:border-border-dark p-6 shadow-sm">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div>
+                                        <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Export Formats</h3>
+                                        <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">Most used export formats</p>
+                                    </div>
+                                    <span class="material-symbols-outlined text-green-500 text-xl">pie_chart</span>
+                                </div>
+                                <div class="h-64">
+                                    <canvas id="exportFormatChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Enhanced Generated Reports Table -->
+                        <div class="chart-container rounded-2xl border border-border-light dark:border-border-dark shadow-sm">
+                            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-border-light dark:border-border-dark p-6">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-text-light dark:text-text-dark">Generated Reports</h3>
+                                    <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">Manage and download your generated reports</p>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="relative">
+                                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-subtle-text-light dark:text-subtle-text-dark">search</span>
+                                        <input class="pl-10 pr-4 py-2 rounded-lg border border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800/50 text-sm text-text-light dark:text-text-dark focus:border-primary focus:ring-primary" id="report-search" placeholder="Search reports..." type="text"/>
+                                    </div>
+                                    <button class="flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-2 text-sm font-semibold text-white hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg">
+                                        <span class="material-symbols-outlined text-base">add</span>
+                                        New Report
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-sm">
+                                    <thead class="border-b border-border-light dark:border-border-dark text-xs uppercase text-subtle-text-light dark:text-subtle-text-dark">
+                                        <tr>
+                                            <th class="px-6 py-4 font-medium">
+                                                <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Report Name <span class="material-symbols-outlined !text-base">swap_vert</span></div>
+                                            </th>
+                                            <th class="px-6 py-4 font-medium">
+                                                <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Created <span class="material-symbols-outlined !text-base">swap_vert</span></div>
+                                            </th>
+                                            <th class="px-6 py-4 font-medium">
+                                                <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Type <span class="material-symbols-outlined !text-base">swap_vert</span></div>
+                                            </th>
+                                            <th class="px-6 py-4 font-medium">
+                                                <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Size <span class="material-symbols-outlined !text-base">swap_vert</span></div>
+                                            </th>
+                                            <th class="px-6 py-4 font-medium">
+                                                <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Status <span class="material-symbols-outlined !text-base">swap_vert</span></div>
+                                            </th>
+                                            <th class="px-6 py-4 font-medium">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-subtle-text-light dark:text-subtle-text-dark">
+                                        <tr class="border-b border-border-light dark:border-border-dark hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-500/5 dark:hover:to-purple-500/5 transition-all duration-200">
+                                            <td class="px-6 py-4">
+                                                <div class="report-card p-3 rounded-lg">
+                                                    <div class="flex items-center gap-3">
+                                                        <div class="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
+                                                            <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-sm">picture_as_pdf</span>
+                                                        </div>
+                                                        <div>
+                                                            <p class="font-semibold text-text-light dark:text-text-dark">Q3 2024 Marketing Performance</p>
+                                                            <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Executive summary with key insights and recommendations</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div>
+                                                    <p class="font-medium text-text-light dark:text-text-dark">Oct 27, 2024</p>
+                                                    <p class="text-xs">2:34 PM</p>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <span class="px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-500/20 text-blue-800 dark:text-blue-300 text-xs font-medium">Executive</span>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <span class="text-text-light dark:text-text-dark font-medium">2.4 MB</span>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div class="flex items-center gap-2">
+                                                    <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                                                    <span class="text-green-700 dark:text-green-400 font-medium text-xs">Ready</span>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div class="flex items-center gap-1">
+                                                    <button class="download-btn p-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 transition-colors" data-report="Q3 2024 Marketing Performance">
+                                                        <span class="material-symbols-outlined text-base">download</span>
+                                                    </button>
+                                                    <button class="share-btn p-2 rounded-lg hover:bg-green-100 dark:hover:bg-green-500/20 text-green-600 dark:text-green-400 transition-colors">
+                                                        <span class="material-symbols-outlined text-base">share</span>
+                                                    </button>
+                                                    <button class="delete-btn p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 transition-colors" data-report="Q3 2024 Marketing Performance">
+                                                        <span class="material-symbols-outlined text-base">delete</span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="border-b border-border-light dark:border-border-dark hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 dark:hover:from-green-500/5 dark:hover:to-emerald-500/5 transition-all duration-200">
+                                            <td class="px-6 py-4">
+                                                <div class="report-card p-3 rounded-lg">
+                                                    <div class="flex items-center gap-3">
+                                                        <div class="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-500/20 flex items-center justify-center">
+                                                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-sm">table_chart</span>
+                                                        </div>
+                                                        <div>
+                                                            <p class="font-semibold text-text-light dark:text-text-dark">Campaign Performance Data</p>
+                                                            <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Detailed metrics and KPIs with trend analysis</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div>
+                                                    <p class="font-medium text-text-light dark:text-text-dark">Oct 26, 2024</p>
+                                                    <p class="text-xs">4:12 PM</p>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <span class="px-3 py-1 rounded-full bg-green-100 dark:bg-green-500/20 text-green-800 dark:text-green-300 text-xs font-medium">Data Export</span>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <span class="text-text-light dark:text-text-dark font-medium">856 KB</span>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div class="flex items-center gap-2">
+                                                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                                    <span class="text-green-700 dark:text-green-400 font-medium text-xs">Ready</span>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div class="flex items-center gap-1">
+                                                    <button class="download-btn p-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 transition-colors" data-report="Campaign Performance Data">
+                                                        <span class="material-symbols-outlined text-base">download</span>
+                                                    </button>
+                                                    <button class="share-btn p-2 rounded-lg hover:bg-green-100 dark:hover:bg-green-500/20 text-green-600 dark:text-green-400 transition-colors">
+                                                        <span class="material-symbols-outlined text-base">share</span>
+                                                    </button>
+                                                    <button class="delete-btn p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 transition-colors" data-report="Campaign Performance Data">
+                                                        <span class="material-symbols-outlined text-base">delete</span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="border-b border-border-light dark:border-border-dark hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 dark:hover:from-purple-500/5 dark:hover:to-pink-500/5 transition-all duration-200">
+                                            <td class="px-6 py-4">
+                                                <div class="report-card p-3 rounded-lg">
+                                                    <div class="flex items-center gap-3">
+                                                        <div class="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center">
+                                                            <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-sm">insights</span>
+                                                        </div>
+                                                        <div>
+                                                            <p class="font-semibold text-text-light dark:text-text-dark">Audience Demographics Analysis</p>
+                                                            <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Age, gender, location breakdown with behavioral insights</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div>
+                                                    <p class="font-medium text-text-light dark:text-text-dark">Oct 25, 2024</p>
+                                                    <p class="text-xs">11:45 AM</p>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <span class="px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-500/20 text-purple-800 dark:text-purple-300 text-xs font-medium">Analytics</span>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <span class="text-text-light dark:text-text-dark font-medium">1.8 MB</span>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div class="flex items-center gap-2">
+                                                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                                    <span class="text-green-700 dark:text-green-400 font-medium text-xs">Ready</span>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div class="flex items-center gap-1">
+                                                    <button class="download-btn p-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 transition-colors" data-report="Audience Demographics Analysis">
+                                                        <span class="material-symbols-outlined text-base">download</span>
+                                                    </button>
+                                                    <button class="share-btn p-2 rounded-lg hover:bg-green-100 dark:hover:bg-green-500/20 text-green-600 dark:text-green-400 transition-colors">
+                                                        <span class="material-symbols-outlined text-base">share</span>
+                                                    </button>
+                                                    <button class="delete-btn p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 transition-colors" data-report="Audience Demographics Analysis">
+                                                        <span class="material-symbols-outlined text-base">delete</span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-gradient-to-r hover:from-orange-50 hover:to-yellow-50 dark:hover:from-orange-500/5 dark:hover:to-yellow-500/5 transition-all duration-200">
+                                            <td class="px-6 py-4">
+                                                <div class="report-card p-3 rounded-lg">
+                                                    <div class="flex items-center gap-3">
+                                                        <div class="w-10 h-10 rounded-lg bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center">
+                                                            <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-sm">analytics</span>
+                                                        </div>
+                                                        <div>
+                                                            <p class="font-semibold text-text-light dark:text-text-dark">ROI & Financial Summary</p>
+                                                            <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Return on investment breakdown with forecasting</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div>
+                                                    <p class="font-medium text-text-light dark:text-text-dark">Oct 24, 2024</p>
+                                                    <p class="text-xs">3:22 PM</p>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <span class="px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/20 text-orange-800 dark:text-orange-300 text-xs font-medium">Financial</span>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <span class="text-text-light dark:text-text-dark font-medium">3.1 MB</span>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div class="flex items-center gap-2">
+                                                    <div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                                                    <span class="text-blue-700 dark:text-blue-400 font-medium text-xs">Generating</span>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div class="flex items-center gap-1">
+                                                    <button class="p-2 rounded-lg text-gray-400 dark:text-gray-600 cursor-not-allowed" disabled>
+                                                        <span class="material-symbols-outlined text-base">download</span>
+                                                    </button>
+                                                    <button class="p-2 rounded-lg text-gray-400 dark:text-gray-600 cursor-not-allowed" disabled>
+                                                        <span class="material-symbols-outlined text-base">share</span>
+                                                    </button>
+                                                    <button class="delete-btn p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 transition-colors" data-report="ROI & Financial Summary">
+                                                        <span class="material-symbols-outlined text-base">delete</span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Enhanced Pagination -->
+                            <div class="flex items-center justify-between border-t border-border-light dark:border-border-dark p-6 text-sm">
+                                <span class="text-subtle-text-light dark:text-subtle-text-dark">Showing 1 to 4 of 247 reports</span>
+                                <div class="inline-flex items-center space-x-2">
+                                    <button class="rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-700/50 disabled:opacity-50 transition-colors" disabled="">
+                                        <span class="material-symbols-outlined text-base">chevron_left</span>
+                                    </button>
+                                    <button class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold">1</button>
+                                    <button class="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700/50 text-subtle-text-light dark:text-subtle-text-dark font-medium transition-colors">2</button>
+                                    <button class="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700/50 text-subtle-text-light dark:text-subtle-text-dark font-medium transition-colors">3</button>
+                                    <span class="text-subtle-text-light dark:text-subtle-text-dark">...</span>
+                                    <button class="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700/50 text-subtle-text-light dark:text-subtle-text-dark font-medium transition-colors">25</button>
+                                    <button class="rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
+                                        <span class="material-symbols-outlined text-base">chevron_right</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Analytics Insights -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Most Used Templates -->
+                            <div class="chart-container rounded-2xl border border-border-light dark:border-border-dark p-6 shadow-sm">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div>
+                                        <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Most Used Templates</h3>
+                                        <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">Template usage statistics</p>
+                                    </div>
+                                    <span class="material-symbols-outlined text-purple-500 text-xl">star</span>
+                                </div>
+                                
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between p-3 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-500/10 dark:to-purple-500/10">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
+                                                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-sm">description</span>
+                                            </div>
+                                            <span class="text-sm font-medium text-text-light dark:text-text-dark">Executive Summary</span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-20 h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+                                                <div class="w-3/4 h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full"></div>
+                                            </div>
+                                            <span class="text-xs text-subtle-text-light dark:text-subtle-text-dark font-medium">87%</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-500/10 dark:to-emerald-500/10">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-lg bg-green-100 dark:bg-green-500/20 flex items-center justify-center">
+                                                <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-sm">campaign</span>
+                                            </div>
+                                            <span class="text-sm font-medium text-text-light dark:text-text-dark">Campaign Performance</span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-20 h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+                                                <div class="w-2/3 h-full bg-gradient-to-r from-green-500 to-emerald-600 rounded-full"></div>
+                                            </div>
+                                            <span class="text-xs text-subtle-text-light dark:text-subtle-text-dark font-medium">67%</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 rounded-lg bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-500/10 dark:to-pink-500/10">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center">
+                                                <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-sm">groups</span>
+                                            </div>
+                                            <span class="text-sm font-medium text-text-light dark:text-text-dark">Audience Analysis</span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-20 h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+                                                <div class="w-1/2 h-full bg-gradient-to-r from-purple-500 to-pink-600 rounded-full"></div>
+                                            </div>
+                                            <span class="text-xs text-subtle-text-light dark:text-subtle-text-dark font-medium">52%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Performance Metrics -->
+                            <div class="chart-container rounded-2xl border border-border-light dark:border-border-dark p-6 shadow-sm">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div>
+                                        <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Performance Metrics</h3>
+                                        <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">Key performance indicators</p>
+                                    </div>
+                                    <span class="material-symbols-outlined text-green-500 text-xl">speed</span>
+                                </div>
+                                
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-text-light dark:text-text-dark">Average Generation Time</span>
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-sm font-semibold text-text-light dark:text-text-dark">2.3s</span>
+                                            <span class="text-xs text-green-500 font-medium">↗ +0.2s</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-text-light dark:text-text-dark">Success Rate</span>
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-sm font-semibold text-text-light dark:text-text-dark">98.7%</span>
+                                            <span class="text-xs text-green-500 font-medium">↗ +0.2%</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-text-light dark:text-text-dark">User Satisfaction</span>
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-sm font-semibold text-text-light dark:text-text-dark">4.8/5</span>
+                                            <span class="text-xs text-green-500 font-medium">↗ +0.1</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-text-light dark:text-text-dark">Data Accuracy</span>
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-sm font-semibold text-text-light dark:text-text-dark">99.2%</span>
+                                            <span class="text-xs text-green-500 font-medium">↗ +0.1%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Apply theme immediately to prevent flash
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- THEME TOGGLE ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            
+            function updateThemeUI() {
+                const isDark = document.documentElement.classList.contains('dark');
+                themeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+                themeText.textContent = isDark ? 'Light' : 'Dark';
+            }
+            
+            themeToggle.addEventListener('click', function() {
+                const isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                updateThemeUI();
+            });
+
+            // --- ENHANCED REPORT GENERATION ---
+            const generateBtn = document.querySelector('.generate-report-btn');
+            const scheduleBtn = document.querySelector('.schedule-report-btn');
+            
+            generateBtn.addEventListener('click', function() {
+                const reportName = document.getElementById('report-name').value.trim();
+                const dateRange = document.getElementById('date-range').value;
+                const format = document.getElementById('export-format').value;
+                
+                // Get selected data sources
+                const selectedSources = [];
+                document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+                    if (checkbox.parentElement.querySelector('span').textContent !== 'Campaign Performance') {
+                        selectedSources.push(checkbox.parentElement.querySelector('span').textContent);
+                    }
+                });
+                
+                if (!reportName) {
+                    showNotification('Please enter a report name', 'warning');
+                    return;
+                }
+                
+                // Create actual report data
+                const reportData = {
+                    name: reportName,
+                    dateRange: dateRange,
+                    format: format,
+                    dataSources: selectedSources,
+                    generatedAt: new Date().toISOString(),
+                    content: generateReportContent(reportName, dateRange, format, selectedSources)
+                };
+                
+                // Create new report row in the table
+                const tbody = document.querySelector('tbody');
+                const newRow = document.createElement('tr');
+                newRow.className = 'border-b border-border-light dark:border-border-dark hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-500/5 dark:hover:to-purple-500/5 transition-all duration-200';
+                
+                const reportIcon = format === 'PDF' ? 'picture_as_pdf' : format === 'Excel (XLSX)' ? 'table_chart' : format === 'CSV' ? 'description' : 'slideshow';
+                const reportType = format === 'PDF' ? 'Executive' : format === 'Excel (XLSX)' ? 'Data Export' : format === 'CSV' ? 'Data' : 'Presentation';
+                const reportBgColor = format === 'PDF' ? 'blue' : format === 'Excel (XLSX)' ? 'green' : format === 'CSV' ? 'orange' : 'purple';
+                
+                newRow.innerHTML = `
+                    <td class="px-6 py-4">
+                        <div class="report-card p-3 rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-${reportBgColor}-100 dark:bg-${reportBgColor}-500/20 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-${reportBgColor}-600 dark:text-${reportBgColor}-400 text-sm">${reportIcon}</span>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-text-light dark:text-text-dark">${reportName}</p>
+                                    <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Generated ${new Date().toLocaleDateString()}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div>
+                            <p class="font-medium text-text-light dark:text-text-dark">${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+                            <p class="text-xs">${new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</p>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 rounded-full bg-${reportBgColor}-100 dark:bg-${reportBgColor}-500/20 text-${reportBgColor}-800 dark:text-${reportBgColor}-300 text-xs font-medium">${reportType}</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="text-text-light dark:text-text-dark font-medium">${(Math.random() * 3 + 0.5).toFixed(1)} MB</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                            <span class="text-blue-700 dark:text-blue-400 font-medium text-xs">Generating</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-1">
+                            <button class="download-btn p-2 rounded-lg text-gray-400 dark:text-gray-600 cursor-not-allowed" disabled data-report="${reportName}">
+                                <span class="material-symbols-outlined text-base">download</span>
+                            </button>
+                            <button class="share-btn p-2 rounded-lg text-gray-400 dark:text-gray-600 cursor-not-allowed" disabled data-report="${reportName}">
+                                <span class="material-symbols-outlined text-base">share</span>
+                            </button>
+                            <button class="delete-btn p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 transition-colors" data-report="${reportName}">
+                                <span class="material-symbols-outlined text-base">delete</span>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                tbody.insertBefore(newRow, tbody.firstChild);
+                
+                // Clear form
+                document.getElementById('report-name').value = '';
+                
+                // Simulate file generation
+                setTimeout(() => {
+                    generateActualReport(reportData, newRow);
+                }, 2000);
+                
+                showNotification('Report generation started!', 'success');
+            });
+
+            scheduleBtn.addEventListener('click', function() {
+                showNotification('Report scheduling feature coming soon!', 'info');
+            });
+            
+            function generateReportContent(name, dateRange, format, sources) {
+                return {
+                    title: name,
+                    summary: `Marketing Analytics Report for ${dateRange}`,
+                    metrics: {
+                        totalCampaigns: 12,
+                        totalSpend: '$284,500',
+                        totalImpressions: '2.8M',
+                        totalClicks: '125,400',
+                        totalConversions: '4,230',
+                        avgROI: '4.2x'
+                    },
+                    dateRange: dateRange,
+                    dataSources: sources,
+                    generatedAt: new Date().toISOString()
+                };
+            }
+            
+            function generateActualReport(reportData, rowElement) {
+                // Create actual file based on format
+                let content, mimeType, filename;
+                
+                switch(reportData.format) {
+                    case 'PDF':
+                        content = generatePDFContent(reportData);
+                        mimeType = 'application/pdf';
+                        filename = `${reportData.name.replace(/\s+/g, '_')}.pdf.txt`;
+                        break;
+                    case 'Excel (XLSX)':
+                        content = generateExcelContent(reportData);
+                        mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+                        filename = `${reportData.name.replace(/\s+/g, '_')}.xlsx.txt`;
+                        break;
+                    case 'CSV':
+                        content = generateCSVContent(reportData);
+                        mimeType = 'text/csv';
+                        filename = `${reportData.name.replace(/\s+/g, '_')}.csv`;
+                        break;
+                    case 'PowerPoint':
+                        content = generatePPTContent(reportData);
+                        mimeType = 'application/vnd.ms-powerpoint';
+                        filename = `${reportData.name.replace(/\s+/g, '_')}.pptx.txt`;
+                        break;
+                    default:
+                        content = JSON.stringify(reportData, null, 2);
+                        mimeType = 'application/json';
+                        filename = `${reportData.name.replace(/\s+/g, '_')}.json`;
+                }
+                
+                // Update row to ready status
+                const downloadBtn = rowElement.querySelector('.download-btn');
+                const shareBtn = rowElement.querySelector('.share-btn');
+                const statusIndicator = rowElement.querySelector('.bg-blue-500.animate-pulse').parentElement;
+                const statusText = statusIndicator.querySelector('span');
+                
+                // Change status to ready
+                statusIndicator.innerHTML = '<div class="w-2 h-2 rounded-full bg-green-500"></div><span class="text-green-700 dark:text-green-400 font-medium text-xs">Ready</span>';
+                
+                // Enable buttons
+                downloadBtn.className = 'download-btn p-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 transition-colors';
+                downloadBtn.disabled = false;
+                shareBtn.className = 'share-btn p-2 rounded-lg hover:bg-green-100 dark:hover:bg-green-500/20 text-green-600 dark:text-green-400 transition-colors';
+                shareBtn.disabled = false;
+                
+                // Store file data for download
+                downloadBtn.dataset.fileContent = content;
+                downloadBtn.dataset.mimeType = mimeType;
+                downloadBtn.dataset.filename = filename;
+                
+                showNotification(`Report "${reportData.name}" generated successfully!`, 'success');
+            }
+            
+            function generatePDFContent(data) {
+                return `MARKETING ANALYTICS REPORT
+Generated: ${new Date().toLocaleString()}
+Report: ${data.name}
+Date Range: ${data.dateRange}
+
+EXECUTIVE SUMMARY
+================
+This report provides comprehensive insights into marketing performance.
+
+KEY METRICS
+===========
+• Total Campaigns: ${data.content.metrics.totalCampaigns}
+• Total Spend: ${data.content.metrics.totalSpend}
+• Total Impressions: ${data.content.metrics.totalImpressions}
+• Total Clicks: ${data.content.metrics.totalClicks}
+• Total Conversions: ${data.content.metrics.totalConversions}
+• Average ROI: ${data.content.metrics.avgROI}
+
+DATA SOURCES
+============
+${data.content.dataSources.join(', ') || 'All available sources'}
+
+Generated by Marketing Analytics Dashboard`;
+            }
+            
+            function generateExcelContent(data) {
+                return `Campaign Name\tSpend\tImpressions\tClicks\tConversions\tROI
+Summer Sale 2024\t$50,000\t1,200,000\t8,930\t412\t3.5x
+Holiday Push\t$75,000\t1,800,000\t12,400\t580\t4.2x
+Brand Awareness\t$45,000\t900,000\t6,200\t280\t3.8x
+Product Launch\t$60,000\t1,500,000\t10,800\t520\t4.5x
+Q4 Campaign\t$54,500\t1,100,000\t7,900\t380\t3.9x`;
+            }
+            
+            function generateCSVContent(data) {
+                return `Metric,Value,Change
+Total Campaigns,12,+2
+Total Spend,$284,500,+$12,400
+Total Impressions,2.8M,+15.3%
+Total Clicks,125,400,+8.7%
+Total Conversions,4,230,+12.1%
+Average ROI,4.2x,+0.3x`;
+            }
+            
+            function generatePPTContent(data) {
+                return `MARKETING ANALYTICS PRESENTATION
+Generated: ${new Date().toLocaleString()}
+
+SLIDE 1: EXECUTIVE SUMMARY
+• Report: ${data.name}
+• Period: ${data.dateRange}
+• Total Campaigns: ${data.content.metrics.totalCampaigns}
+• Total ROI: ${data.content.metrics.avgROI}
+
+SLIDE 2: KEY PERFORMANCE INDICATORS
+• Spend: ${data.content.metrics.totalSpend}
+• Impressions: ${data.content.metrics.totalImpressions}
+• Conversions: ${data.content.metrics.totalConversions}
+• ROI: ${data.content.metrics.avgROI}
+
+SLIDE 3: RECOMMENDATIONS
+• Continue high-performing campaigns
+• Optimize underperforming channels
+• Increase budget allocation to digital channels
+• Focus on conversion rate improvements`;
+            }
+
+            // --- TEMPLATE BUTTONS ---
+            const templateBtns = document.querySelectorAll('.template-btn');
+            templateBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const templateName = this.querySelector('p').textContent;
+                    document.getElementById('report-name').value = templateName;
+                    showNotification(`Template "${templateName}" loaded!`, 'success');
+                });
+            });
+
+            // --- ENHANCED ACTION BUTTONS ---
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.download-btn')) {
+                    const btn = e.target.closest('.download-btn');
+                    if (!btn.disabled) {
+                        const fileContent = btn.dataset.fileContent;
+                        const mimeType = btn.dataset.mimeType;
+                        const filename = btn.dataset.filename;
+                        downloadFile(fileContent, filename, mimeType);
+                    }
+                }
+                
+                if (e.target.closest('.delete-btn')) {
+                    const row = e.target.closest('tr');
+                    const reportName = e.target.closest('.delete-btn').dataset.report;
+                    row.style.opacity = '0.5';
+                    setTimeout(() => {
+                        row.remove();
+                        showNotification(`Report "${reportName}" deleted successfully`, 'success');
+                    }, 300);
+                }
+                
+                if (e.target.closest('.share-btn')) {
+                    const btn = e.target.closest('.share-btn');
+                    if (!btn.disabled) {
+                        const reportName = btn.dataset.report;
+                        const shareUrl = `${window.location.href}#${reportName.replace(/\s+/g, '-').toLowerCase()}`;
+                        
+                        navigator.clipboard.writeText(shareUrl).then(() => {
+                            showNotification(`Share link for "${reportName}" copied to clipboard!`, 'success');
+                        }).catch(() => {
+                            const textArea = document.createElement('textarea');
+                            textArea.value = shareUrl;
+                            document.body.appendChild(textArea);
+                            textArea.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(textArea);
+                            showNotification(`Share link for "${reportName}" copied to clipboard!`, 'success');
+                        });
+                    }
+                }
+            });
+            
+            // --- SHARE AND AI INSIGHTS BUTTONS ---
+            const shareBtn = document.getElementById('share-btn');
+            const aiInsightsBtn = document.getElementById('ai-insights-btn');
+            
+            shareBtn.addEventListener('click', function() {
+                const shareUrl = window.location.href;
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    showNotification('Reports page link copied to clipboard!', 'success');
+                }).catch(() => {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = shareUrl;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showNotification('Reports page link copied to clipboard!', 'success');
+                });
+            });
+            
+            aiInsightsBtn.addEventListener('click', function() {
+                showAIInsights();
+            });
+            
+            // --- ENHANCED TABLE FUNCTIONALITY ---
+            const tableHeaders = document.querySelectorAll('th');
+            const paginationBtns = document.querySelectorAll('.inline-flex.items-center.space-x-2 button');
+            let currentPage = 1;
+            const itemsPerPage = 4;
+            
+            // Table sorting
+            tableHeaders.forEach(header => {
+                if (header.querySelector('.material-symbols-outlined')) {
+                    header.style.cursor = 'pointer';
+                    header.addEventListener('click', function() {
+                        const columnIndex = Array.from(this.parentNode.children).indexOf(this);
+                        const isAscending = this.classList.contains('sort-asc');
+                        
+                        tableHeaders.forEach(h => {
+                            h.classList.remove('sort-asc', 'sort-desc');
+                            const icon = h.querySelector('.material-symbols-outlined');
+                            if (icon) icon.textContent = 'swap_vert';
+                        });
+                        
+                        this.classList.add(isAscending ? 'sort-desc' : 'sort-asc');
+                        const icon = this.querySelector('.material-symbols-outlined');
+                        if (icon) icon.textContent = isAscending ? 'keyboard_arrow_down' : 'keyboard_arrow_up';
+                        
+                        sortReportsTable(columnIndex, !isAscending);
+                    });
+                }
+            });
+            
+            function sortReportsTable(columnIndex, ascending) {
+                const tbody = document.querySelector('tbody');
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+                
+                rows.sort((a, b) => {
+                    const aValue = a.children[columnIndex].textContent.trim();
+                    const bValue = b.children[columnIndex].textContent.trim();
+                    
+                    // Handle dates
+                    if (columnIndex === 1) {
+                        const aDate = new Date(aValue + ' ' + a.children[1].querySelector('.text-xs')?.textContent);
+                        const bDate = new Date(bValue + ' ' + b.children[1].querySelector('.text-xs')?.textContent);
+                        return ascending ? aDate - bDate : bDate - aDate;
+                    }
+                    
+                    // Handle file sizes
+                    if (columnIndex === 3) {
+                        const aSize = parseFloat(aValue.replace(/[^\d.]/g, ''));
+                        const bSize = parseFloat(bValue.replace(/[^\d.]/g, ''));
+                        return ascending ? aSize - bSize : bSize - aSize;
+                    }
+                    
+                    // Handle text
+                    return ascending ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+                });
+                
+                rows.forEach(row => tbody.appendChild(row));
+                showNotification(`Reports sorted${ascending ? ' (A-Z)' : ' (Z-A)'}`, 'info');
+            }
+            
+            // Enhanced pagination
+            paginationBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (this.textContent.includes('chevron_left')) {
+                        currentPage = Math.max(1, currentPage - 1);
+                    } else if (this.textContent.includes('chevron_right')) {
+                        currentPage = Math.min(25, currentPage + 1);
+                    } else if (!isNaN(parseInt(this.textContent))) {
+                        currentPage = parseInt(this.textContent);
+                    }
+                    
+                    showReportsPage(currentPage);
+                });
+            });
+            
+            function showReportsPage(page) {
+                const tbody = document.querySelector('tbody');
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+                const startIndex = (page - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                
+                rows.forEach((row, index) => {
+                    row.style.display = (index >= startIndex && index < endIndex) ? '' : 'none';
+                });
+                
+                // Update pagination buttons
+                paginationBtns.forEach(btn => {
+                    btn.className = btn.className.replace(/bg-gradient-to-r from-blue-500 to-purple-600 text-white|hover:bg-gray-100 dark:hover:bg-gray-700\/60 text-subtle-text-light dark:text-subtle-text-dark/g, '');
+                    if (btn.textContent == page) {
+                        btn.classList.add('bg-gradient-to-r', 'from-blue-500', 'to-purple-600', 'text-white');
+                    } else if (!isNaN(parseInt(btn.textContent))) {
+                        btn.classList.add('hover:bg-gray-100', 'dark:hover:bg-gray-700/60', 'text-subtle-text-light', 'dark:text-subtle-text-dark');
+                    }
+                });
+                
+                // Update status
+                const statusText = document.querySelector('.flex.items-center.justify-between.border-t.border-border-light.dark\\:border-border-dark.p-6.text-sm span');
+                if (statusText) {
+                    const visibleCount = Math.min(itemsPerPage, rows.length - startIndex);
+                    statusText.textContent = `Showing ${startIndex + 1} to ${startIndex + visibleCount} of 247 reports`;
+                }
+            }
+            
+            // File download function
+            function downloadFile(content, filename, mimeType) {
+                const blob = new Blob([content], { type: mimeType });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = filename;
+                link.click();
+                showNotification(`Downloading ${filename}...`, 'info');
+            }
+            
+            // AI Insights function
+            function showAIInsights() {
+                showNotification('Analyzing your marketing data...', 'info');
+                
+                setTimeout(() => {
+                    const insights = [
+                        '🎯 Opportunity: Reallocate 15% budget from Print to Digital for 23% ROI improvement',
+                        '📈 Trend: Mobile engagement up 31% - consider mobile-first campaign strategies',
+                        '⚠️ Alert: 3 campaigns showing declining CTR - review targeting parameters',
+                        '💡 Suggestion: Peak engagement time is 2-4 PM - schedule high-priority ads accordingly',
+                        '🔍 Insight: Social media conversion rate 2.3x higher on weekends'
+                    ];
+                    
+                    // Create AI insights modal/notification
+                    const modal = document.createElement('div');
+                    modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4';
+                    modal.innerHTML = `
+                        <div class="bg-card-light dark:bg-card-dark rounded-2xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-semibold text-text-light dark:text-text-dark flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-purple-500">auto_awesome</span>
+                                    AI-Powered Marketing Insights
+                                </h3>
+                                <button class="close-ai-modal p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                                    <span class="material-symbols-outlined text-gray-500">close</span>
+                                </button>
+                            </div>
+                            <div class="space-y-4">
+                                ${insights.map(insight => `
+                                    <div class="p-4 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-500/10 dark:to-purple-500/10 border border-blue-200 dark:border-blue-700">
+                                        <p class="text-sm text-text-light dark:text-text-dark">${insight}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="flex justify-end mt-6">
+                                <button class="close-ai-modal px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">
+                                    Got it, thanks!
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.body.appendChild(modal);
+                    
+                    // Close modal functionality
+                    const closeBtns = modal.querySelectorAll('.close-ai-modal');
+                    closeBtns.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            modal.remove();
+                        });
+                    });
+                    
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            modal.remove();
+                        }
+                    });
+                }, 1500);
+            }
+
+            // --- ENHANCED REPORT SEARCH ---
+            const reportSearch = document.getElementById('report-search');
+            const tableRows = document.querySelectorAll('tbody tr');
+            
+            reportSearch.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const visibleRows = [];
+                
+                tableRows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    const isVisible = text.includes(searchTerm);
+                    row.style.display = isVisible ? '' : 'none';
+                    if (isVisible) visibleRows.push(row);
+                });
+                
+                // Update showing text
+                const statusText = document.querySelector('.flex.items-center.justify-between.border-t.border-border-light.dark\\:border-border-dark.p-6.text-sm span');
+                if (statusText) {
+                    statusText.textContent = `Showing 1 to ${visibleRows.length} of 247 reports`;
+                }
+            });
+            
+            // --- NOTIFICATION SYSTEM ---
+            function showNotification(message, type = 'info', duration = 3000) {
+                // Remove existing notifications
+                const existingNotifications = document.querySelectorAll('.notification');
+                existingNotifications.forEach(notification => notification.remove());
+                
+                const notification = document.createElement('div');
+                notification.className = `notification fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 max-w-sm ${
+                    type === 'success' ? 'bg-green-500 text-white' :
+                    type === 'error' ? 'bg-red-500 text-white' :
+                    type === 'warning' ? 'bg-yellow-500 text-black' :
+                    'bg-blue-500 text-white'
+                }`;
+                notification.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-lg">
+                            ${type === 'success' ? 'check_circle' :
+                              type === 'error' ? 'error' :
+                              type === 'warning' ? 'warning' : 'info'}
+                        </span>
+                        <span class="text-sm font-medium">${message}</span>
+                        <button class="notification-close ml-auto p-1 hover:bg-white/20 rounded">
+                            <span class="material-symbols-outlined text-sm">close</span>
+                        </button>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.opacity = '1';
+                    notification.style.transform = 'translateX(0)';
+                }, 100);
+                
+                const closeBtn = notification.querySelector('.notification-close');
+                closeBtn.addEventListener('click', () => {
+                    hideNotification(notification);
+                });
+                
+                setTimeout(() => {
+                    hideNotification(notification);
+                }, duration);
+            }
+            
+            function hideNotification(notification) {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            }
+            
+            // Add notification and sorting styles
+            const notificationStyles = document.createElement('style');
+            notificationStyles.textContent = `
+                .notification {
+                    opacity: 0;
+                    transform: translateX(100%);
+                    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                }
+                .notification-close:hover {
+                    background-color: rgba(255, 255, 255, 0.2);
+                    border-radius: 4px;
+                }
+                th.sort-asc, th.sort-desc {
+                    color: #428bf0;
+                }
+                th.sort-asc .material-symbols-outlined,
+                th.sort-desc .material-symbols-outlined {
+                    color: #428bf0;
+                }
+                /* AI Modal animation */
+                .fixed.inset-0 {
+                    animation: fadeIn 0.3s ease-out;
+                }
+                .bg-card-light.dark\\:bg-card-dark {
+                    animation: slideUp 0.3s ease-out;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes slideUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `;
+            document.head.appendChild(notificationStyles);
+
+            // Chart setup
+            const isDarkMode = document.documentElement.classList.contains('dark');
+            const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
+            const tickColor = isDarkMode ? '#94A3B8' : '#64748B';
+            
+            Chart.defaults.font.family = 'Inter';
+            Chart.defaults.color = tickColor;
+
+            // Report Usage Chart
+            const usageCtx = document.getElementById('reportUsageChart').getContext('2d');
+            new Chart(usageCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                    datasets: [{
+                        label: 'Reports Generated',
+                        data: [45, 52, 48, 65, 78, 85, 92, 88, 95, 102],
+                        borderColor: '#428bf0',
+                        backgroundColor: 'rgba(66, 139, 240, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#428bf0',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5
+                    }, {
+                        label: 'Reports Downloaded',
+                        data: [38, 45, 42, 58, 68, 75, 82, 78, 85, 92],
+                        borderColor: '#34D399',
+                        backgroundColor: 'rgba(52, 211, 153, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#34D399',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                padding: 20
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: tickColor }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: gridColor },
+                            ticks: { color: tickColor }
+                        }
+                    }
+                }
+            });
+
+            // Export Format Chart
+            const formatCtx = document.getElementById('exportFormatChart').getContext('2d');
+            new Chart(formatCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['PDF', 'Excel (XLSX)', 'CSV', 'PowerPoint'],
+                    datasets: [{
+                        data: [45, 32, 18, 5],
+                        backgroundColor: [
+                            '#428bf0',
+                            '#34D399',
+                            '#F59E0B',
+                            '#A78BFA'
+                        ],
+                        borderColor: isDarkMode ? '#1E293B' : '#FFFFFF',
+                        borderWidth: 3,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                padding: 15
+                            }
+                        }
+                    }
+                }
+            });
+
+            // --- NOTIFICATION SYSTEM ---
+            function showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 ${
+                    type === 'success' ? 'bg-green-500 text-white' :
+                    type === 'error' ? 'bg-red-500 text-white' :
+                    'bg-blue-500 text-white'
+                }`;
+                notification.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">
+                            ${type === 'success' ? 'check_circle' : type === 'error' ? 'error' : 'info'}
+                        </span>
+                        <span class="text-sm font-medium">${message}</span>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 300);
+                }, 3000);
+            }
+
+            // --- SMOOTH SCROLL ANIMATIONS ---
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards and sections
+            document.querySelectorAll('.chart-container, .metric-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
