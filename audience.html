@@ -108,26 +108,93 @@
         .dark .audience-segment {
             background: linear-gradient(90deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
         }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .mobile-hidden {
+                display: none;
+            }
+            .mobile-stack {
+                flex-direction: column;
+            }
+            .mobile-full {
+                width: 100%;
+            }
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
     </style>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden">
+        <div class="w-64 h-full bg-card-light dark:bg-card-dark shadow-xl transform -translate-x-full transition-transform duration-300 ease-in-out" id="mobile-menu">
+            <div class="p-4 border-b border-border-light dark:border-border-dark">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAe1DuBqgz-Dwzu6hPDQwfhWeHZnB0RG99sLofEPVPjidVTASZwxNy87zjeElIoFK2VzO-xiNqmgJZAmGOs9CtRkTZdk_XDLwJLPh9a6Ayhd1Ny_NPNoj0XZy6Xu99spoMz4rnkc4yHWeB-buhibpyow8DSctTZYGnXOm6_AHW8lGiOxZkvquZnETyzcK92b_gsspxWUF4VEIjw3OTNAjOP-WtJCvHysrmTLslbIKYB_LDHTd21IFECqk2W6OOPncmPq3VYTrHDrWY");'></div>
+                        <div>
+                            <h2 class="text-text-light dark:text-text-dark text-base font-bold">TABSONS</h2>
+                            <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm">Workspace</p>
+                        </div>
+                    </div>
+                    <button id="close-mobile-menu" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg lg:hidden">
+                        <span class="material-symbols-outlined text-gray-500">close</span>
+                    </button>
+                </div>
+            </div>
+            <nav class="p-4 flex-1 overflow-y-auto">
+                <div class="flex flex-col gap-2">
+                    <a class="flex items-center gap-3 px-3 py-3 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg min-h-[48px]" href="index.html">
+                        <span class="material-symbols-outlined">dashboard</span>
+                        <p class="text-sm font-medium leading-normal">Dashboard</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-3 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg min-h-[48px]" href="campaign.html">
+                        <span class="material-symbols-outlined">campaign</span>
+                        <p class="text-sm font-medium leading-normal">Campaigns</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary min-h-[48px]" href="audience.html">
+                        <span class="material-symbols-outlined">groups</span>
+                        <p class="text-sm font-medium leading-normal">Audience</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-3 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg min-h-[48px]" href="reports.html">
+                        <span class="material-symbols-outlined">analytics</span>
+                        <p class="text-sm font-medium leading-normal">Reports</p>
+                    </a>
+                </div>
+                <div class="mt-8 flex flex-col gap-2">
+                    <a class="flex items-center gap-3 px-3 py-3 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg min-h-[48px]" href="#">
+                        <span class="material-symbols-outlined">settings</span>
+                        <p class="text-sm font-medium leading-normal">Settings</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-3 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg min-h-[48px]" href="#">
+                        <span class="material-symbols-outlined">help</span>
+                        <p class="text-sm font-medium leading-normal">Support</p>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </div>
+
     <div class="flex h-screen overflow-hidden">
-        <!-- Sidebar -->
-        <aside class="flex w-64 flex-col border-r border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-4">
+        <!-- Desktop Sidebar -->
+        <aside class="hidden lg:flex w-64 flex-col border-r border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-4">
              <div class="flex-shrink-0">
                 <div class="flex items-center gap-3">
                     <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAe1DuBqgz-Dwzu6hPDQwfhWeHZnB0RG99sLofEPVPjidVTASZwxNy87zjeElIoFK2VzO-xiNqmgJZAmGOs9CtRkTZdk_XDLwJLPh9a6Ayhd1Ny_NPNoj0XZy6Xu99spoMz4rnkc4yHWeB-buhibpyow8DSctTZYGnXOm6_AHW8lGiOxZkvquZnETyzcK92b_gsspxWUF4VEIjw3OTNAjOP-WtJCvHysrmTLslbIKYB_LDHTd21IFECqk2W6OOPncmPq3VYTrHDrWY");'></div>
                     <div class="flex flex-col">
-                        <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">Marketing Co.</h1>
+                        <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">TABSONS</h1>
                         <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-normal leading-normal">Workspace</p>
                     </div>
                 </div>
                 <nav class="mt-8 flex flex-col gap-2">
                     <a class="flex items-center gap-3 px-3 py-2 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg" href="index.html"><span class="material-symbols-outlined">dashboard</span><p class="text-sm font-medium leading-normal">Dashboard</p></a>
                     <a class="flex items-center gap-3 px-3 py-2 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg" href="campaign.html"><span class="material-symbols-outlined">campaign</span><p class="text-sm font-medium leading-normal">Campaigns</p></a>
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary" href="audience.html"><span class="material-symbols-outlined">groups</span><p class="text-sm font-medium leading-normal">Audience</p></a>
-                    <a class="flex items-center gap-3 px-3 py-2 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg" href="reports.html"><span class="material-symbols-outlined">lab_profile</span><p class="text-sm font-medium leading-normal">Reports</p></a>
+                    <a class="flex items-center gap-3 px-3 py-2 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg" href="audience.html"><span class="material-symbols-outlined">groups</span><p class="text-sm font-medium leading-normal">Audience</p></a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary" href="reports.html"><span class="material-symbols-outlined">analytics</span><p class="text-sm font-medium leading-normal">Reports</p></a>
                 </nav>
             </div>
             <div class="mt-auto flex flex-col gap-2">
@@ -136,588 +203,558 @@
             </div>
         </aside>
 
+        <!-- Mobile Header -->
+        <div class="lg:hidden fixed top-0 left-0 right-0 z-30 bg-card-light dark:bg-card-dark border-b border-border-light dark:border-border-dark">
+            <div class="flex items-center justify-between p-4">
+                <button id="mobile-menu-button" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                    <span class="material-symbols-outlined text-gray-600 dark:text-gray-400">menu</span>
+                </button>
+                <div class="flex items-center gap-2">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAe1DuBqgz-Dwzu6hPDQwfhWeHZnB0RG99sLofEPVPjidVTASZwxNy87zjeElIoFK2VzO-xiNqmgJZAmGOs9CtRkTZdk_XDLwJLPh9a6Ayhd1Ny_NPNoj0XZy6Xu99spoMz4rnkc4yHWeB-buhibpyow8DSctTZYGnXOm6_AHW8lGiOxZkvquZnETyzcK92b_gsspxWUF4VEIjw3OTNAjOP-WtJCvHysrmTLslbIKYB_LDHTd21IFECqk2W6OOPncmPq3VYTrHDrWY");'></div>
+                    <span class="text-text-light dark:text-text-dark font-semibold">Audience</span>
+                </div>
+                <button id="theme-toggle-mobile" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                    <span id="theme-icon-mobile" class="material-symbols-outlined text-gray-600 dark:text-gray-400">dark_mode</span>
+                </button>
+            </div>
+        </div>
+
         <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto">
-            <div class="p-6 lg:p-8 space-y-8 animate-fade-in">
+        <main class="flex-1 overflow-y-auto pt-16 lg:pt-0">
+            <div class="p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in">
                 <!-- Enhanced Header -->
-                <div class="gradient-bg rounded-2xl p-8 text-white relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-32 translate-x-32"></div>
-                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full translate-y-24 -translate-x-24"></div>
+                <div class="gradient-bg rounded-xl lg:rounded-2xl p-4 sm:p-6 lg:p-8 text-white relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 sm:w-48 lg:w-64 h-32 sm:h-48 lg:h-64 bg-white/10 rounded-full -translate-y-16 sm:-translate-y-24 lg:-translate-y-32 translate-x-16 sm:translate-x-24 lg:translate-x-32"></div>
+                    <div class="absolute bottom-0 left-0 w-24 sm:w-32 lg:w-48 h-24 sm:h-32 lg:h-48 bg-white/10 rounded-full translate-y-12 sm:translate-y-16 lg:translate-y-24 -translate-x-12 sm:-translate-x-16 lg:-translate-x-24"></div>
+                    <div class="absolute top-1/2 left-1/2 w-48 sm:w-64 lg:w-96 h-48 sm:h-64 lg:h-96 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 pulse-ring"></div>
                     <div class="relative z-10">
-                        <div class="flex flex-wrap items-center justify-between gap-4">
-                            <div class="flex flex-col gap-3">
-                                <h1 class="text-4xl font-bold leading-tight tracking-tight">Audience Overview</h1>
-                                <p class="text-white/90 text-lg font-normal leading-relaxed">Deep insights into your target audience behavior and preferences</p>
-                                <div class="flex items-center gap-4 text-white/80">
+                        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-6">
+                            <div class="flex flex-col gap-2 sm:gap-3">
+                                <h1 class="text-xl sm:text-2xl lg:text-4xl font-bold leading-tight tracking-tight">Audience Overview</h1>
+                                <p class="text-white/90 text-sm sm:text-base lg:text-lg font-normal leading-relaxed">Deep insights into your target audience behavior and preferences</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap items-start sm:items-center gap-3 sm:gap-4 lg:gap-6 text-white/80">
                                     <div class="flex items-center gap-2">
-                                        <span class="material-symbols-outlined text-lg">people</span>
-                                        <span class="text-sm font-medium">82,260 Total Users</span>
+                                        <span class="material-symbols-outlined text-sm sm:text-base lg:text-lg animate-bounce-subtle">people</span>
+                                        <span class="text-xs sm:text-sm font-medium">82,260 Total Users</span>
                                     </div>
                                     <div class="flex items-center gap-2">
-                                        <span class="material-symbols-outlined text-lg">trending_up</span>
-                                        <span class="text-sm font-medium">+15.3% Growth This Month</span>
+                                        <span class="material-symbols-outlined text-sm sm:text-base lg:text-lg">trending_up</span>
+                                        <span class="text-xs sm:text-sm font-medium">+15.3% Growth This Month</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-3">
-                                <button id="theme-toggle" class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white/20 text-white border border-white/30 text-sm font-medium leading-normal hover:bg-white/30 backdrop-blur-sm">
-                                    <span id="theme-icon" class="material-symbols-outlined text-base">light_mode</span>
-                                    <span id="theme-text">Light</span>
+                            <div class="flex flex-wrap items-center gap-2 sm:gap-3 lg:flex-nowrap">
+                                <button id="theme-toggle-desktop" class="hidden lg:flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white/20 text-white border border-white/30 text-sm font-medium leading-normal hover:bg-white/30 backdrop-blur-sm">
+                                    <span id="theme-icon-desktop" class="material-symbols-outlined text-base">light_mode</span>
+                                    <span id="theme-text-desktop">Light</span>
                                 </button>
-                                <button id="share-btn" class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white/20 text-white border border-white/30 text-sm font-medium leading-normal hover:bg-white/30 backdrop-blur-sm"><span class="material-symbols-outlined text-base">ios_share</span><span>Share</span></button>
-                                <button id="export-btn" class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white text-primary text-sm font-medium leading-normal hover:bg-gray-100 shadow-sm"><span class="material-symbols-outlined text-base">download</span><span>Export Data</span></button>
+                                <button id="share-btn" class="flex items-center justify-center gap-1 sm:gap-2 rounded-lg h-10 sm:h-10 px-3 sm:px-4 bg-white/20 text-white border border-white/30 text-xs sm:text-sm font-medium leading-normal hover:bg-white/30 backdrop-blur-sm">
+                                    <span class="material-symbols-outlined text-sm sm:text-base">ios_share</span>
+                                    <span class="hidden sm:inline">Share</span>
+                                </button>
+                                <button id="export-btn" class="flex items-center justify-center gap-1 sm:gap-2 rounded-lg h-10 sm:h-10 px-3 sm:px-4 bg-white text-primary text-xs sm:text-sm font-medium leading-normal hover:bg-gray-100 shadow-sm">
+                                    <span class="material-symbols-outlined text-sm sm:text-base">download</span>
+                                    <span class="hidden sm:inline">Export</span>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Enhanced KPI Cards -->
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 animate-slide-up">
-                    <div class="metric-card rounded-xl p-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 lg:gap-6 animate-slide-up">
+                    <div class="metric-card rounded-2xl p-4 lg:p-6 hover:scale-105 transition-all duration-300">
                         <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Total Users</p>
+                            <div class="flex-1">
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-xs lg:text-sm font-semibold mb-2">Total Users</p>
                                 <div class="flex items-baseline gap-2">
-                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">82.3K</p>
-                                    <p class="text-green-500 text-sm font-medium">+8.2%</p>
+                                    <p class="text-2xl lg:text-4xl font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">82.3K</p>
+                                    <div class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-green-500 text-xs">trending_up</span>
+                                        <p class="text-green-500 text-xs font-bold">+8.2%</p>
+                                    </div>
                                 </div>
+                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark mt-1">registered users</p>
                             </div>
-                            <div class="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-2xl">people</span>
+                            <div class="w-10 h-10 lg:w-14 lg:h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg ml-2">
+                                <span class="material-symbols-outlined text-white text-lg lg:text-2xl">people</span>
                             </div>
                         </div>
                     </div>
-                    <div class="metric-card rounded-xl p-6">
+                    <div class="metric-card rounded-2xl p-4 lg:p-6 hover:scale-105 transition-all duration-300">
                         <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Active Users</p>
+                            <div class="flex-1">
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-xs lg:text-sm font-semibold mb-2">Active Users</p>
                                 <div class="flex items-baseline gap-2">
-                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">64.1K</p>
-                                    <p class="text-green-500 text-sm font-medium">+12.5%</p>
+                                    <p class="text-2xl lg:text-4xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">64.1K</p>
+                                    <div class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-green-500 text-xs">trending_up</span>
+                                        <p class="text-green-500 text-xs font-bold">+12.5%</p>
+                                    </div>
                                 </div>
+                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark mt-1">monthly active</p>
                             </div>
-                            <div class="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-500/20 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-2xl">person</span>
+                            <div class="w-10 h-10 lg:w-14 lg:h-14 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg ml-2">
+                                <span class="material-symbols-outlined text-white text-lg lg:text-2xl">person</span>
                             </div>
                         </div>
                     </div>
-                    <div class="metric-card rounded-xl p-6">
+                    <div class="metric-card rounded-2xl p-4 lg:p-6 hover:scale-105 transition-all duration-300">
                         <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Engagement Rate</p>
+                            <div class="flex-1">
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-xs lg:text-sm font-semibold mb-2">Engagement Rate</p>
                                 <div class="flex items-baseline gap-2">
-                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">78.9%</p>
-                                    <p class="text-green-500 text-sm font-medium">+3.4%</p>
+                                    <p class="text-2xl lg:text-4xl font-black bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">78.9%</p>
+                                    <div class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-green-500 text-xs">trending_up</span>
+                                        <p class="text-green-500 text-xs font-bold">+3.4%</p>
+                                    </div>
                                 </div>
+                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark mt-1">user engagement</p>
                             </div>
-                            <div class="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-2xl">favorite</span>
+                            <div class="w-10 h-10 lg:w-14 lg:h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center shadow-lg ml-2">
+                                <span class="material-symbols-outlined text-white text-lg lg:text-2xl">favorite</span>
                             </div>
                         </div>
                     </div>
-                    <div class="metric-card rounded-xl p-6">
+                    <div class="metric-card rounded-2xl p-4 lg:p-6 hover:scale-105 transition-all duration-300">
                         <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Avg. Session</p>
+                            <div class="flex-1">
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-xs lg:text-sm font-semibold mb-2">Avg. Session</p>
                                 <div class="flex items-baseline gap-2">
-                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">12m</p>
-                                    <p class="text-green-500 text-sm font-medium">+1.2m</p>
+                                    <p class="text-2xl lg:text-4xl font-black bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">12m</p>
+                                    <div class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-green-500 text-xs">trending_up</span>
+                                        <p class="text-green-500 text-xs font-bold">+1.2m</p>
+                                    </div>
                                 </div>
+                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark mt-1">session duration</p>
                             </div>
-                            <div class="w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-2xl">schedule</span>
+                            <div class="w-10 h-10 lg:w-14 lg:h-14 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center shadow-lg ml-2">
+                                <span class="material-symbols-outlined text-white text-lg lg:text-2xl">schedule</span>
                             </div>
                         </div>
                     </div>
-                    <div class="metric-card rounded-xl p-6">
+                    <div class="metric-card rounded-2xl p-4 lg:p-6 hover:scale-105 transition-all duration-300">
                         <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Conversions</p>
+                            <div class="flex-1">
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-xs lg:text-sm font-semibold mb-2">Conversions</p>
                                 <div class="flex items-baseline gap-2">
-                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">4,201</p>
-                                    <p class="text-green-500 text-sm font-medium">+15.7%</p>
+                                    <p class="text-2xl lg:text-4xl font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">4.2K</p>
+                                    <div class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-green-500 text-xs">trending_up</span>
+                                        <p class="text-green-500 text-xs font-bold">+15.7%</p>
+                                    </div>
                                 </div>
+                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark mt-1">user conversions</p>
                             </div>
-                            <div class="w-12 h-12 rounded-lg bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-2xl">trending_up</span>
+                            <div class="w-10 h-10 lg:w-14 lg:h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg ml-2">
+                                <span class="material-symbols-outlined text-white text-lg lg:text-2xl">trending_up</span>
                             </div>
                         </div>
                     </div>
-                    <div class="metric-card rounded-xl p-6">
+                    <div class="metric-card rounded-2xl p-4 lg:p-6 hover:scale-105 transition-all duration-300">
                         <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Retention</p>
+                            <div class="flex-1">
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-xs lg:text-sm font-semibold mb-2">Retention</p>
                                 <div class="flex items-baseline gap-2">
-                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">89.2%</p>
-                                    <p class="text-green-500 text-sm font-medium">+2.1%</p>
+                                    <p class="text-2xl lg:text-4xl font-black bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">89.2%</p>
+                                    <div class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-green-500 text-xs">trending_up</span>
+                                        <p class="text-green-500 text-xs font-bold">+2.1%</p>
+                                    </div>
                                 </div>
+                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark mt-1">user retention</p>
                             </div>
-                            <div class="w-12 h-12 rounded-lg bg-pink-100 dark:bg-pink-500/20 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-pink-600 dark:text-pink-400 text-2xl">repeat</span>
+                            <div class="w-10 h-10 lg:w-14 lg:h-14 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center shadow-lg ml-2">
+                                <span class="material-symbols-outlined text-white text-lg lg:text-2xl">repeat</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Enhanced Filters Section -->
-                <div class="rounded-2xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-sm">
-                    <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
-                        <div>
-                            <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Audience Filters</h3>
-                            <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">Refine your audience analysis</p>
-                        </div>
-                        <span class="material-symbols-outlined text-primary text-xl">tune</span>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                        <div>
-                            <label class="text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Age Range</label>
-                            <select id="age-filter" class="w-full rounded-lg border-border-light dark:border-border-dark bg-gray-100 dark:bg-gray-800 text-text-light dark:text-text-dark text-sm py-2 px-3 focus:border-primary focus:ring-primary">
-                                <option value="all">All Ages</option>
-                                <option value="18-24">18-24</option>
-                                <option value="25-34">25-34</option>
-                                <option value="35-44">35-44</option>
-                                <option value="45+">45+</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Gender</label>
-                            <select id="gender-filter" class="w-full rounded-lg border-border-light dark:border-border-dark bg-gray-100 dark:bg-gray-800 text-text-light dark:text-text-dark text-sm py-2 px-3 focus:border-primary focus:ring-primary">
-                                <option value="all">All Genders</option>
-                                <option value="female">Female</option>
-                                <option value="male">Male</option>
-                                <option value="non-binary">Non-binary</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Location</label>
-                            <select id="location-filter" class="w-full rounded-lg border-border-light dark:border-border-dark bg-gray-100 dark:bg-gray-800 text-text-light dark:text-text-dark text-sm py-2 px-3 focus:border-primary focus:ring-primary">
-                                <option value="all">All Locations</option>
-                                <option value="united-states">United States</option>
-                                <option value="canada">Canada</option>
-                                <option value="united-kingdom">United Kingdom</option>
-                                <option value="germany">Germany</option>
-                                <option value="france">France</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Interests</label>
-                            <select id="interests-filter" class="w-full rounded-lg border-border-light dark:border-border-dark bg-gray-100 dark:bg-gray-800 text-text-light dark:text-text-dark text-sm py-2 px-3 focus:border-primary focus:ring-primary">
-                                <option value="all">All Interests</option>
-                                <option value="technology">Technology</option>
-                                <option value="travel">Travel</option>
-                                <option value="fitness">Fitness</option>
-                                <option value="food-dining">Food & Dining</option>
-                                <option value="entertainment">Entertainment</option>
-                                <option value="shopping">Shopping</option>
-                                <option value="sports">Sports</option>
-                                <option value="art-culture">Art & Culture</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Device</label>
-                            <select id="device-filter" class="w-full rounded-lg border-border-light dark:border-border-dark bg-gray-100 dark:bg-gray-800 text-text-light dark:text-text-dark text-sm py-2 px-3 focus:border-primary focus:ring-primary">
-                                <option value="all">All Devices</option>
-                                <option value="mobile">Mobile</option>
-                                <option value="desktop">Desktop</option>
-                                <option value="tablet">Tablet</option>
-                                <option value="smart-tv">Smart TV</option>
-                                <option value="gaming-console">Gaming Console</option>
-                            </select>
-                        </div>
-                        <div class="flex items-end gap-2">
-                            <button id="apply-filters" class="flex-1 flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary/90 transition-colors">
-                                <span class="material-symbols-outlined text-base">filter_alt</span>
-                                Apply
-                            </button>
-                            <button id="reset-filters" class="flex items-center justify-center gap-2 rounded-lg bg-gray-200 dark:bg-gray-700 px-3 py-2 text-sm font-medium text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
-                                <span class="material-symbols-outlined text-sm">refresh</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Main Charts Grid -->
-                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6">
                     <!-- Engagement Over Time -->
-                    <div class="xl:col-span-2 chart-container rounded-2xl p-6 shadow-sm">
+                    <div class="xl:col-span-2 chart-container rounded-2xl p-4 lg:p-6 shadow-sm">
                         <div class="flex items-center justify-between mb-4">
                             <div>
-                                <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Engagement Trends</h3>
-                                <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">Track user engagement and activity over time</p>
+                                <h3 class="text-base lg:text-lg font-semibold text-text-light dark:text-text-dark">Engagement Trends</h3>
+                                <p class="text-xs lg:text-sm text-subtle-text-light dark:text-subtle-text-dark">Track user engagement and activity over time</p>
                             </div>
-                            <span class="material-symbols-outlined text-blue-500 text-xl">trending_up</span>
+                            <span class="material-symbols-outlined text-blue-500 text-lg lg:text-xl">trending_up</span>
                         </div>
-                        <div class="h-80">
+                        <div class="h-48 lg:h-80">
                             <canvas id="engagementOverTimeChart"></canvas>
                         </div>
                     </div>
 
                     <!-- Audience Composition -->
-                    <div class="chart-container rounded-2xl p-6 shadow-sm">
+                    <div class="chart-container rounded-2xl p-4 lg:p-6 shadow-sm">
                         <div class="flex items-center justify-between mb-4">
                             <div>
-                                <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Audience Composition</h3>
-                                <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">User breakdown by demographics</p>
+                                <h3 class="text-base lg:text-lg font-semibold text-text-light dark:text-text-dark">Audience Composition</h3>
+                                <p class="text-xs lg:text-sm text-subtle-text-light dark:text-subtle-text-dark">User breakdown by demographics</p>
                             </div>
-                            <span class="material-symbols-outlined text-purple-500 text-xl">pie_chart</span>
+                            <span class="material-symbols-outlined text-purple-500 text-lg lg:text-xl">pie_chart</span>
                         </div>
-                        <div class="h-80">
+                        <div class="h-48 lg:h-80">
                             <canvas id="audienceCompositionChart"></canvas>
                         </div>
                     </div>
                 </div>
 
                 <!-- Multi-Chart Analysis Grid -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
                     <!-- Demographics Deep Dive -->
-                    <div class="chart-container rounded-2xl p-6 shadow-sm">
+                    <div class="chart-container rounded-2xl p-4 lg:p-6 shadow-sm">
                         <div class="flex items-center justify-between mb-4">
                             <div>
-                                <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Demographics Deep Dive</h3>
-                                <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">Detailed age and gender breakdown</p>
+                                <h3 class="text-base lg:text-lg font-semibold text-text-light dark:text-text-dark">Demographics Deep Dive</h3>
+                                <p class="text-xs lg:text-sm text-subtle-text-light dark:text-subtle-text-dark">Detailed age and gender breakdown</p>
                             </div>
-                            <span class="material-symbols-outlined text-green-500 text-xl">analytics</span>
+                            <span class="material-symbols-outlined text-green-500 text-lg lg:text-xl">analytics</span>
                         </div>
-                        <div class="h-64">
+                        <div class="h-48 lg:h-64">
                             <canvas id="demographicsChart"></canvas>
                         </div>
                     </div>
 
                     <!-- Geographic Distribution -->
-                    <div class="chart-container rounded-2xl p-6 shadow-sm">
+                    <div class="chart-container rounded-2xl p-4 lg:p-6 shadow-sm">
                         <div class="flex items-center justify-between mb-4">
                             <div>
-                                <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Geographic Distribution</h3>
-                                <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">User concentration by location</p>
+                                <h3 class="text-base lg:text-lg font-semibold text-text-light dark:text-text-dark">Geographic Distribution</h3>
+                                <p class="text-xs lg:text-sm text-subtle-text-light dark:text-subtle-text-dark">User concentration by location</p>
                             </div>
-                            <span class="material-symbols-outlined text-red-500 text-xl">public</span>
+                            <span class="material-symbols-outlined text-red-500 text-lg lg:text-xl">public</span>
                         </div>
-                        <div class="h-64">
+                        <div class="h-48 lg:h-64">
                             <canvas id="geographicChart"></canvas>
                         </div>
                     </div>
 
                     <!-- Interest Categories -->
-                    <div class="chart-container rounded-2xl p-6 shadow-sm">
+                    <div class="chart-container rounded-2xl p-4 lg:p-6 shadow-sm">
                         <div class="flex items-center justify-between mb-4">
                             <div>
-                                <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Interest Categories</h3>
-                                <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">Top interest categories breakdown</p>
+                                <h3 class="text-base lg:text-lg font-semibold text-text-light dark:text-text-dark">Interest Categories</h3>
+                                <p class="text-xs lg:text-sm text-subtle-text-light dark:text-subtle-text-dark">Top interest categories breakdown</p>
                             </div>
-                            <span class="material-symbols-outlined text-orange-500 text-xl">category</span>
+                            <span class="material-symbols-outlined text-orange-500 text-lg lg:text-xl">category</span>
                         </div>
-                        <div class="h-64">
+                        <div class="h-48 lg:h-64">
                             <canvas id="interestsChart"></canvas>
                         </div>
                     </div>
 
                     <!-- Device & Platform Usage -->
-                    <div class="chart-container rounded-2xl p-6 shadow-sm">
+                    <div class="chart-container rounded-2xl p-4 lg:p-6 shadow-sm">
                         <div class="flex items-center justify-between mb-4">
                             <div>
-                                <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Device & Platform Usage</h3>
-                                <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">How users access your content</p>
+                                <h3 class="text-base lg:text-lg font-semibold text-text-light dark:text-text-dark">Device & Platform Usage</h3>
+                                <p class="text-xs lg:text-sm text-subtle-text-light dark:text-subtle-text-dark">How users access your content</p>
                             </div>
-                            <span class="material-symbols-outlined text-teal-500 text-xl">devices</span>
+                            <span class="material-symbols-outlined text-teal-500 text-lg lg:text-xl">devices</span>
                         </div>
-                        <div class="h-64">
+                        <div class="h-48 lg:h-64">
                             <canvas id="deviceChart"></canvas>
                         </div>
                     </div>
                 </div>
 
                 <!-- User Journey & Behavioral Analysis -->
-                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6">
                     <!-- User Journey Funnel -->
-                    <div class="xl:col-span-2 chart-container rounded-2xl p-6 shadow-sm">
+                    <div class="xl:col-span-2 chart-container rounded-2xl p-4 lg:p-6 shadow-sm">
                         <div class="flex items-center justify-between mb-4">
                             <div>
-                                <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">User Journey Funnel</h3>
-                                <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">How users progress through your platform</p>
+                                <h3 class="text-base lg:text-lg font-semibold text-text-light dark:text-text-dark">User Journey Funnel</h3>
+                                <p class="text-xs lg:text-sm text-subtle-text-light dark:text-subtle-text-dark">How users progress through your platform</p>
                             </div>
-                            <span class="material-symbols-outlined text-indigo-500 text-xl">route</span>
+                            <span class="material-symbols-outlined text-indigo-500 text-lg lg:text-xl">route</span>
                         </div>
-                        <div class="h-80">
+                        <div class="h-64 lg:h-80">
                             <canvas id="userJourneyChart"></canvas>
                         </div>
                     </div>
 
                     <!-- Behavioral Insights -->
-                    <div class="chart-container rounded-2xl p-6 shadow-sm">
+                    <div class="chart-container rounded-2xl p-4 lg:p-6 shadow-sm">
                         <div class="flex items-center justify-between mb-4">
                             <div>
-                                <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Behavioral Insights</h3>
-                                <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">User behavior patterns</p>
+                                <h3 class="text-base lg:text-lg font-semibold text-text-light dark:text-text-dark">Behavioral Insights</h3>
+                                <p class="text-xs lg:text-sm text-subtle-text-light dark:text-subtle-text-dark">User behavior patterns</p>
                             </div>
-                            <span class="material-symbols-outlined text-yellow-500 text-xl">psychology</span>
+                            <span class="material-symbols-outlined text-yellow-500 text-lg lg:text-xl">psychology</span>
                         </div>
-                        <div class="h-80">
+                        <div class="h-64 lg:h-80">
                             <canvas id="behavioralChart"></canvas>
                         </div>
                     </div>
                 </div>
 
                 <!-- Enhanced Audience Segments Table -->
-                <div class="rounded-2xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark shadow-sm">
-                    <div class="flex flex-wrap items-center justify-between gap-4 border-b border-border-light dark:border-border-dark p-6">
+                <div class="chart-container rounded-2xl border border-border-light dark:border-border-dark shadow-sm">
+                    <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-border-light dark:border-border-dark p-4 lg:p-6">
                         <div>
-                            <h3 class="text-xl font-semibold text-text-light dark:text-text-dark">Audience Segments</h3>
-                            <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">Detailed breakdown of user segments and their characteristics</p>
+                            <h3 class="text-lg lg:text-xl font-semibold text-text-light dark:text-text-dark">Audience Segments</h3>
+                            <p class="text-xs lg:text-sm text-subtle-text-light dark:text-subtle-text-dark">Detailed breakdown of user segments and their characteristics</p>
                         </div>
-                        <div class="flex items-center gap-3">
-                            <div class="relative">
-                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-subtle-text-light dark:text-subtle-text-dark">search</span>
-                                <input id="segment-search" class="h-10 w-full rounded-lg border border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800/50 pl-10 pr-4 text-sm text-text-light dark:text-text-dark focus:border-primary focus:ring-primary" placeholder="Search segments..." type="search"/>
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full lg:w-auto">
+                            <div class="relative flex-1 lg:w-64">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-subtle-text-light dark:text-subtle-text-dark text-sm">search</span>
+                                <input id="segment-search" class="h-10 w-full rounded-lg border border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800/50 pl-10 pr-4 text-xs sm:text-sm text-text-light dark:text-text-dark focus:border-primary focus:ring-primary" placeholder="Search segments..." type="search"/>
                             </div>
-                            <button class="flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary/90 transition-colors">
+                            <button class="flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs sm:text-sm font-semibold text-white hover:bg-primary/90 transition-colors min-h-[48px] flex-1 sm:flex-none">
                                 <span class="material-symbols-outlined text-base">add</span>
-                                New Segment
+                                <span class="hidden sm:inline">New Segment</span>
                             </button>
                         </div>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm">
+                    <div class="table-container overflow-x-auto">
+                        <table class="w-full text-left text-xs sm:text-sm">
                             <thead class="border-b border-border-light dark:border-border-dark text-xs uppercase text-subtle-text-light dark:text-subtle-text-dark">
                                 <tr>
-                                    <th class="px-6 py-4 font-medium">
+                                    <th class="px-3 sm:px-6 py-3 sm:py-4 font-medium">
                                         <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Segment Name <span class="material-symbols-outlined !text-base">swap_vert</span></div>
                                     </th>
-                                    <th class="px-6 py-4 font-medium">
+                                    <th class="px-3 sm:px-6 py-3 sm:py-4 font-medium">
                                         <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Users <span class="material-symbols-outlined !text-base">swap_vert</span></div>
                                     </th>
-                                    <th class="px-6 py-4 font-medium">
+                                    <th class="px-3 sm:px-6 py-3 sm:py-4 font-medium">
                                         <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Engagement Rate <span class="material-symbols-outlined !text-base">swap_vert</span></div>
                                     </th>
-                                    <th class="px-6 py-4 font-medium">
+                                    <th class="px-3 sm:px-6 py-3 sm:py-4 font-medium">
                                         <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Conversions <span class="material-symbols-outlined !text-base">swap_vert</span></div>
                                     </th>
-                                    <th class="px-6 py-4 font-medium">
+                                    <th class="px-3 sm:px-6 py-3 sm:py-4 font-medium">
                                         <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Conversion Rate <span class="material-symbols-outlined !text-base">swap_vert</span></div>
                                     </th>
-                                    <th class="px-6 py-4 font-medium">
+                                    <th class="px-3 sm:px-6 py-3 sm:py-4 font-medium">
                                         <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Avg. Value <span class="material-symbols-outlined !text-base">swap_vert</span></div>
                                     </th>
-                                    <th class="px-6 py-4 font-medium">Actions</th>
+                                    <th class="px-3 sm:px-6 py-3 sm:py-4 font-medium">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="text-subtle-text-light dark:text-subtle-text-dark">
                                 <tr class="border-b border-border-light dark:border-border-dark hover:bg-gray-50 dark:hover:bg-gray-800/40 transition-colors">
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="audience-segment p-3 rounded-lg">
-                                            <p class="font-semibold text-text-light dark:text-text-dark">Tech Enthusiasts (US)</p>
+                                            <p class="font-semibold text-text-light dark:text-text-dark text-xs sm:text-sm">Tech Enthusiasts (Mumbai)</p>
                                             <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Age 25-40, High income, Tech interests</p>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-2">
-                                            <span class="text-2xl font-bold text-text-light dark:text-text-dark">25,830</span>
+                                            <span class="text-lg sm:text-2xl font-bold text-text-light dark:text-text-dark">25,830</span>
                                             <div class="text-xs text-green-500 font-medium">↗ +12%</div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-2">
-                                            <div class="w-16 h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+                                            <div class="w-12 sm:w-16 h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
                                                 <div class="w-3/4 h-full bg-green-500 rounded-full"></div>
                                             </div>
-                                            <span class="text-sm font-medium">75.2%</span>
+                                            <span class="text-xs sm:text-sm font-medium">75.2%</span>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-2">
-                                            <span class="font-semibold text-text-light dark:text-text-dark">1,204</span>
+                                            <span class="font-semibold text-text-light dark:text-text-dark text-xs sm:text-sm">1,204</span>
                                             <div class="text-xs text-green-500 font-medium">↗ +8%</div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <span class="px-2 py-1 rounded-full bg-green-100 dark:bg-green-500/20 text-green-800 dark:text-green-300 text-xs font-medium">4.66%</span>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        <span class="font-semibold text-text-light dark:text-text-dark">$127.50</span>
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                        <span class="font-semibold text-text-light dark:text-text-dark text-xs sm:text-sm">$127.50</span>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-1">
                                             <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                                                <span class="material-symbols-outlined text-base">visibility</span>
+                                                <span class="material-symbols-outlined text-sm sm:text-base">visibility</span>
                                             </button>
                                             <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                                                <span class="material-symbols-outlined text-base">edit</span>
+                                                <span class="material-symbols-outlined text-sm sm:text-base">edit</span>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr class="border-b border-border-light dark:border-border-dark hover:bg-gray-50 dark:hover:bg-gray-800/40 transition-colors">
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="audience-segment p-3 rounded-lg">
-                                            <p class="font-semibold text-text-light dark:text-text-dark">Fitness Buffs (25-34)</p>
+                                            <p class="font-semibold text-text-light dark:text-text-dark text-xs sm:text-sm">Fitness Buffs (25-34)</p>
                                             <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Age 25-34, Health conscious, Active lifestyle</p>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-2">
-                                            <span class="text-2xl font-bold text-text-light dark:text-text-dark">18,450</span>
+                                            <span class="text-lg sm:text-2xl font-bold text-text-light dark:text-text-dark">18,450</span>
                                             <div class="text-xs text-green-500 font-medium">↗ +18%</div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-2">
-                                            <div class="w-16 h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+                                            <div class="w-12 sm:w-16 h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
                                                 <div class="w-5/6 h-full bg-green-500 rounded-full"></div>
                                             </div>
-                                            <span class="text-sm font-medium">82.8%</span>
+                                            <span class="text-xs sm:text-sm font-medium">82.8%</span>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-2">
-                                            <span class="font-semibold text-text-light dark:text-text-dark">980</span>
+                                            <span class="font-semibold text-text-light dark:text-text-dark text-xs sm:text-sm">980</span>
                                             <div class="text-xs text-green-500 font-medium">↗ +15%</div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <span class="px-2 py-1 rounded-full bg-green-100 dark:bg-green-500/20 text-green-800 dark:text-green-300 text-xs font-medium">5.31%</span>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        <span class="font-semibold text-text-light dark:text-text-dark">$89.30</span>
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                        <span class="font-semibold text-text-light dark:text-text-dark text-xs sm:text-sm">$89.30</span>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-1">
                                             <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                                                <span class="material-symbols-outlined text-base">visibility</span>
+                                                <span class="material-symbols-outlined text-sm sm:text-base">visibility</span>
                                             </button>
                                             <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                                                <span class="material-symbols-outlined text-base">edit</span>
+                                                <span class="material-symbols-outlined text-sm sm:text-base">edit</span>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr class="border-b border-border-light dark:border-border-dark hover:bg-gray-50 dark:hover:bg-gray-800/40 transition-colors">
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="audience-segment p-3 rounded-lg">
-                                            <p class="font-semibold text-text-light dark:text-text-dark">Travel Lovers (UK)</p>
+                                            <p class="font-semibold text-text-light dark:text-text-dark text-xs sm:text-sm">Travel Lovers (Delhi)</p>
                                             <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Age 30-50, Travel enthusiasts, Cultural interests</p>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-2">
-                                            <span class="text-2xl font-bold text-text-light dark:text-text-dark">15,210</span>
+                                            <span class="text-lg sm:text-2xl font-bold text-text-light dark:text-text-dark">15,210</span>
                                             <div class="text-xs text-green-500 font-medium">↗ +7%</div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-2">
-                                            <div class="w-16 h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+                                            <div class="w-12 sm:w-16 h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
                                                 <div class="w-2/3 h-full bg-green-500 rounded-full"></div>
                                             </div>
-                                            <span class="text-sm font-medium">68.1%</span>
+                                            <span class="text-xs sm:text-sm font-medium">68.1%</span>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-2">
-                                            <span class="font-semibold text-text-light dark:text-text-dark">750</span>
+                                            <span class="font-semibold text-text-light dark:text-text-dark text-xs sm:text-sm">750</span>
                                             <div class="text-xs text-green-500 font-medium">↗ +5%</div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <span class="px-2 py-1 rounded-full bg-green-100 dark:bg-green-500/20 text-green-800 dark:text-green-300 text-xs font-medium">4.93%</span>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        <span class="font-semibold text-text-light dark:text-text-dark">$156.80</span>
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                        <span class="font-semibold text-text-light dark:text-text-dark text-xs sm:text-sm">$156.80</span>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-1">
                                             <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                                                <span class="material-symbols-outlined text-base">visibility</span>
+                                                <span class="material-symbols-outlined text-sm sm:text-base">visibility</span>
                                             </button>
                                             <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                                                <span class="material-symbols-outlined text-base">edit</span>
+                                                <span class="material-symbols-outlined text-sm sm:text-base">edit</span>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr class="border-b border-border-light dark:border-border-dark hover:bg-gray-50 dark:hover:bg-gray-800/40 transition-colors">
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="audience-segment p-3 rounded-lg">
-                                            <p class="font-semibold text-text-light dark:text-text-dark">Young Professionals (CA)</p>
+                                            <p class="font-semibold text-text-light dark:text-text-dark text-xs sm:text-sm">Young Professionals (Bangalore)</p>
                                             <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Age 22-35, Urban, Career-focused</p>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-2">
-                                            <span class="text-2xl font-bold text-text-light dark:text-text-dark">12,990</span>
+                                            <span class="text-lg sm:text-2xl font-bold text-text-light dark:text-text-dark">12,990</span>
                                             <div class="text-xs text-green-500 font-medium">↗ +22%</div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-2">
-                                            <div class="w-16 h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+                                            <div class="w-12 sm:w-16 h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
                                                 <div class="w-3/5 h-full bg-green-500 rounded-full"></div>
                                             </div>
-                                            <span class="text-sm font-medium">61.5%</span>
+                                            <span class="text-xs sm:text-sm font-medium">61.5%</span>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-2">
-                                            <span class="font-semibold text-text-light dark:text-text-dark">612</span>
+                                            <span class="font-semibold text-text-light dark:text-text-dark text-xs sm:text-sm">612</span>
                                             <div class="text-xs text-green-500 font-medium">↗ +11%</div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <span class="px-2 py-1 rounded-full bg-green-100 dark:bg-green-500/20 text-green-800 dark:text-green-300 text-xs font-medium">4.71%</span>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        <span class="font-semibold text-text-light dark:text-text-dark">$94.20</span>
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                        <span class="font-semibold text-text-light dark:text-text-dark text-xs sm:text-sm">$94.20</span>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-1">
                                             <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                                                <span class="material-symbols-outlined text-base">visibility</span>
+                                                <span class="material-symbols-outlined text-sm sm:text-base">visibility</span>
                                             </button>
                                             <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                                                <span class="material-symbols-outlined text-base">edit</span>
+                                                <span class="material-symbols-outlined text-sm sm:text-base">edit</span>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition-colors">
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="audience-segment p-3 rounded-lg">
-                                            <p class="font-semibold text-text-light dark:text-text-dark">Female Shoppers (45+)</p>
+                                            <p class="font-semibold text-text-light dark:text-text-dark text-xs sm:text-sm">Fashion Conscious (45+)</p>
                                             <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Age 45+, Fashion, Home, Shopping focused</p>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-2">
-                                            <span class="text-2xl font-bold text-text-light dark:text-text-dark">9,780</span>
+                                            <span class="text-lg sm:text-2xl font-bold text-text-light dark:text-text-dark">9,780</span>
                                             <div class="text-xs text-green-500 font-medium">↗ +3%</div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-2">
-                                            <div class="w-16 h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+                                            <div class="w-12 sm:w-16 h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
                                                 <div class="w-1/2 h-full bg-green-500 rounded-full"></div>
                                             </div>
-                                            <span class="text-sm font-medium">55.9%</span>
+                                            <span class="text-xs sm:text-sm font-medium">55.9%</span>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-2">
-                                            <span class="font-semibold text-text-light dark:text-text-dark">455</span>
+                                            <span class="font-semibold text-text-light dark:text-text-dark text-xs sm:text-sm">455</span>
                                             <div class="text-xs text-green-500 font-medium">↗ +2%</div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <span class="px-2 py-1 rounded-full bg-green-100 dark:bg-green-500/20 text-green-800 dark:text-green-300 text-xs font-medium">4.65%</span>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        <span class="font-semibold text-text-light dark:text-text-dark">$178.90</span>
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                        <span class="font-semibold text-text-light dark:text-text-dark text-xs sm:text-sm">$178.90</span>
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4">
                                         <div class="flex items-center gap-1">
                                             <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                                                <span class="material-symbols-outlined text-base">visibility</span>
+                                                <span class="material-symbols-outlined text-sm sm:text-base">visibility</span>
                                             </button>
                                             <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                                                <span class="material-symbols-outlined text-base">edit</span>
+                                                <span class="material-symbols-outlined text-sm sm:text-base">edit</span>
                                             </button>
                                         </div>
                                     </td>
@@ -725,7 +762,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="flex items-center justify-between border-t border-border-light dark:border-border-dark p-6 text-sm">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-border-light dark:border-border-dark p-4 lg:p-6 text-xs sm:text-sm">
                         <span class="text-subtle-text-light dark:text-subtle-text-dark">Showing 1 to 5 of 12 segments</span>
                         <div class="inline-flex items-center space-x-2">
                             <button class="rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-700/50 disabled:opacity-50 transition-colors" disabled="">
@@ -742,7 +779,17 @@
                 </div>
             </div>
         </main>
-    </div>
+        
+        <!-- Footer -->
+  <footer class="fixed bottom-0 left-0 right-0 z-20 bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark">
+        <div class="px-4 py-3">
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-subtle-text-light dark:text-subtle-text-dark">© 2025 TABSONS. All rights reserved.</span>
+                <span class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Version 1.0</span>
+            </div>
+        </div>
+    </footer>
+
 
     <script>
         // Apply theme immediately to prevent flash
@@ -750,76 +797,159 @@
         document.documentElement.classList.toggle('dark', savedTheme === 'dark');
         
         document.addEventListener('DOMContentLoaded', function() {
+            // --- MOBILE MENU FUNCTIONALITY ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeMobileMenuBtn = document.getElementById('close-mobile-menu');
+
+            if (mobileMenuButton && mobileMenuOverlay) {
+                // Open mobile menu
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenuOverlay.classList.remove('hidden');
+                    setTimeout(() => {
+                        mobileMenu.style.transform = 'translateX(0)';
+                    }, 10);
+                });
+
+                // Close mobile menu
+                function closeMobileMenu() {
+                    mobileMenu.style.transform = 'translateX(-100%)';
+                    setTimeout(() => {
+                        mobileMenuOverlay.classList.add('hidden');
+                    }, 300);
+                }
+
+                if (closeMobileMenuBtn) {
+                    closeMobileMenuBtn.addEventListener('click', closeMobileMenu);
+                }
+
+                // Close menu when clicking overlay
+                mobileMenuOverlay.addEventListener('click', function(e) {
+                    if (e.target === mobileMenuOverlay) {
+                        closeMobileMenu();
+                    }
+                });
+
+                // Close menu when clicking on nav links
+                const mobileNavLinks = mobileMenu.querySelectorAll('a');
+                mobileNavLinks.forEach(link => {
+                    link.addEventListener('click', closeMobileMenu);
+                });
+            }
+
             // --- THEME TOGGLE ---
-            const themeToggle = document.getElementById('theme-toggle');
-            const themeIcon = document.getElementById('theme-icon');
-            const themeText = document.getElementById('theme-text');
+            const themeToggleDesktop = document.getElementById('theme-toggle-desktop');
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+            const themeIconDesktop = document.getElementById('theme-icon-desktop');
+            const themeIconMobile = document.getElementById('theme-icon-mobile');
+            const themeTextDesktop = document.getElementById('theme-text-desktop');
             
             function updateThemeUI() {
                 const isDark = document.documentElement.classList.contains('dark');
-                themeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
-                themeText.textContent = isDark ? 'Light' : 'Dark';
+                if (themeIconDesktop) themeIconDesktop.textContent = isDark ? 'light_mode' : 'dark_mode';
+                if (themeIconMobile) themeIconMobile.textContent = isDark ? 'light_mode' : 'dark_mode';
+                if (themeTextDesktop) themeTextDesktop.textContent = isDark ? 'Light' : 'Dark';
             }
             
-            themeToggle.addEventListener('click', function() {
+            function toggleTheme() {
                 const isDark = document.documentElement.classList.toggle('dark');
                 localStorage.setItem('theme', isDark ? 'dark' : 'light');
                 updateThemeUI();
-            });
-
-            // --- AUDIENCE FILTER FUNCTIONALITY ---
-            const filterElements = {
-                age: document.getElementById('age-filter'),
-                gender: document.getElementById('gender-filter'),
-                location: document.getElementById('location-filter'),
-                interests: document.getElementById('interests-filter'),
-                device: document.getElementById('device-filter')
-            };
+            }
             
+            if (themeToggleDesktop) {
+                themeToggleDesktop.addEventListener('click', toggleTheme);
+            }
+            if (themeToggleMobile) {
+                themeToggleMobile.addEventListener('click', toggleTheme);
+            }
+
+            updateThemeUI();
+
+            // --- ENHANCED FILTER FUNCTIONALITY WITH DROPDOWNS ---
+            const filterDropdowns = document.querySelectorAll('.filter-dropdown');
+            
+            filterDropdowns.forEach(dropdown => {
+                const button = dropdown.querySelector('.filter-btn');
+                const menu = dropdown.querySelector('.dropdown-menu');
+                const filterText = dropdown.querySelector('.filter-text');
+                const options = menu.querySelectorAll('.dropdown-option');
+                
+                // Toggle dropdown on button click
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    // Close all other dropdowns
+                    filterDropdowns.forEach(other => {
+                        if (other !== dropdown) {
+                            other.querySelector('.dropdown-menu').classList.add('hidden');
+                        }
+                    });
+                    
+                    menu.classList.toggle('hidden');
+                });
+                
+                // Handle option selection
+                options.forEach(option => {
+                    option.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const value = this.dataset.value;
+                        filterText.textContent = value;
+                        menu.classList.add('hidden');
+                        
+                        // Show notification about filter change
+                        showNotification(`Filter updated: ${dropdown.dataset.filter} = ${value}`, 'info');
+                        
+                        // Apply filter (you can add actual filtering logic here)
+                        applyFilter(dropdown.dataset.filter, value);
+                    });
+                });
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function() {
+                filterDropdowns.forEach(dropdown => {
+                    dropdown.querySelector('.dropdown-menu').classList.add('hidden');
+                });
+            });
+            
+            // Apply filters and reset functionality
             const applyFiltersBtn = document.getElementById('apply-filters');
             const resetFiltersBtn = document.getElementById('reset-filters');
             
-            function getActiveFilters() {
-                return {
-                    age: filterElements.age.value,
-                    gender: filterElements.gender.value,
-                    location: filterElements.location.value,
-                    interests: filterElements.interests.value,
-                    device: filterElements.device.value
-                };
+            function applyFilter(filterType, value) {
+                console.log(`Applying filter: ${filterType} = ${value}`);
+                // Add actual filtering logic here
             }
             
-            function applyAudienceFilters() {
-                const filters = getActiveFilters();
-                console.log('Applying filters:', filters);
-                
-                // Simulate filter application
-                showNotification(`Filters applied successfully`, 'success');
-                
-                // Here you would typically update charts, tables, etc.
-                // For now, just show the notification
-            }
-            
-            function resetFilters() {
-                Object.values(filterElements).forEach(select => {
-                    select.value = 'all';
+            if (applyFiltersBtn) {
+                applyFiltersBtn.addEventListener('click', function() {
+                    showNotification('Filters applied successfully', 'success');
                 });
-                showNotification('All filters have been reset', 'success');
             }
             
-            applyFiltersBtn.addEventListener('click', applyAudienceFilters);
-            resetFiltersBtn.addEventListener('click', resetFilters);
-            
-            // Auto-apply filters on change (with debouncing)
-            let filterTimeout;
-            Object.values(filterElements).forEach(select => {
-                select.addEventListener('change', function() {
-                    clearTimeout(filterTimeout);
-                    filterTimeout = setTimeout(applyAudienceFilters, 500);
+            if (resetFiltersBtn) {
+                resetFiltersBtn.addEventListener('click', function() {
+                    const defaultValues = {
+                        age: 'All Ages',
+                        gender: 'All Genders',
+                        location: 'All Locations',
+                        interests: 'All Interests',
+                        device: 'All Devices'
+                    };
+                    
+                    filterDropdowns.forEach(dropdown => {
+                        const filterType = dropdown.dataset.filter;
+                        const filterText = dropdown.querySelector('.filter-text');
+                        filterText.textContent = defaultValues[filterType] || 'All...';
+                    });
+                    
+                    showNotification('All filters have been reset', 'success');
                 });
-            });
-            
-            // --- ENHANCED AUDIENCE SEGMENT SEARCH ---
+            }
+
+            // --- AUDIENCE SEGMENT SEARCH ---
             const segmentSearch = document.getElementById('segment-search');
             const tableRows = document.querySelectorAll('tbody tr');
             
@@ -837,134 +967,13 @@
                 // Update showing text
                 updateSegmentStatus(visibleRows.length);
             });
-            
-            // --- TABLE SORTING AND PAGINATION ---
-            const tableHeaders = document.querySelectorAll('th');
-            const paginationBtns = document.querySelectorAll('.inline-flex.items-center.space-x-2 button');
-            let currentPage = 1;
-            const itemsPerPage = 5;
-            
-            // Table sorting functionality
-            tableHeaders.forEach(header => {
-                if (header.querySelector('.material-symbols-outlined')) {
-                    header.style.cursor = 'pointer';
-                    header.addEventListener('click', function() {
-                        const columnIndex = Array.from(this.parentNode.children).indexOf(this);
-                        const isAscending = this.classList.contains('sort-asc');
-                        
-                        // Reset sort classes
-                        tableHeaders.forEach(h => {
-                            h.classList.remove('sort-asc', 'sort-desc');
-                            const icon = h.querySelector('.material-symbols-outlined');
-                            if (icon) icon.textContent = 'swap_vert';
-                        });
-                        
-                        // Set sort direction
-                        this.classList.add(isAscending ? 'sort-desc' : 'sort-asc');
-                        const icon = this.querySelector('.material-symbols-outlined');
-                        if (icon) icon.textContent = isAscending ? 'keyboard_arrow_down' : 'keyboard_arrow_up';
-                        
-                        sortSegmentTable(columnIndex, !isAscending);
-                    });
-                }
-            });
-            
-            function sortSegmentTable(columnIndex, ascending) {
-                const tbody = document.querySelector('tbody');
-                const rows = Array.from(tbody.querySelectorAll('tr'));
-                
-                rows.sort((a, b) => {
-                    const aValue = a.children[columnIndex].textContent.trim();
-                    const bValue = b.children[columnIndex].textContent.trim();
-                    
-                    // Handle numeric values (users count)
-                    const aNum = parseFloat(aValue.replace(/[^\d.-]/g, ''));
-                    const bNum = parseFloat(bValue.replace(/[^\d.-]/g, ''));
-                    
-                    if (!isNaN(aNum) && !isNaN(bNum)) {
-                        return ascending ? aNum - bNum : bNum - aNum;
-                    }
-                    
-                    // Handle percentage values
-                    if (aValue.includes('%') && bValue.includes('%')) {
-                        const aPercent = parseFloat(aValue.replace('%', ''));
-                        const bPercent = parseFloat(bValue.replace('%', ''));
-                        return ascending ? aPercent - bPercent : bPercent - aPercent;
-                    }
-                    
-                    // Handle currency values
-                    if (aValue.includes('$') && bValue.includes('$')) {
-                        const aCurrency = parseFloat(aValue.replace(/[^\d.-]/g, ''));
-                        const bCurrency = parseFloat(bValue.replace(/[^\d.-]/g, ''));
-                        return ascending ? aCurrency - bCurrency : bCurrency - aCurrency;
-                    }
-                    
-                    // Handle text values
-                    return ascending ?
-                        aValue.localeCompare(bValue) :
-                        bValue.localeCompare(aValue);
-                });
-                
-                rows.forEach(row => tbody.appendChild(row));
-                showNotification(`Segments sorted${ascending ? ' (A-Z)' : ' (Z-A)'}`, 'info');
-            }
-            
-            function updateSegmentStatus(visibleCount) {
-                const statusText = document.querySelector('.flex.items-center.justify-between.border-t.border-border-light.dark\\:border-border-dark.p-6.text-sm span');
-                if (statusText) {
-                    statusText.textContent = `Showing 1 to ${visibleCount} of 12 segments`;
-                }
-            }
-            
-            // Enhanced pagination
-            paginationBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    if (this.textContent.includes('chevron_left')) {
-                        currentPage = Math.max(1, currentPage - 1);
-                    } else if (this.textContent.includes('chevron_right')) {
-                        currentPage = Math.min(3, currentPage + 1);
-                    } else if (!isNaN(parseInt(this.textContent))) {
-                        currentPage = parseInt(this.textContent);
-                    }
-                    
-                    showSegmentPage(currentPage);
-                });
-            });
-            
-            function showSegmentPage(page) {
-                const startIndex = (page - 1) * itemsPerPage;
-                const endIndex = startIndex + itemsPerPage;
-                
-                tableRows.forEach((row, index) => {
-                    row.style.display = (index >= startIndex && index < endIndex) ? '' : 'none';
-                });
-                
-                // Update pagination buttons
-                paginationBtns.forEach(btn => {
-                    btn.classList.remove('bg-primary/20', 'text-primary', 'dark:bg-primary', 'dark:text-white');
-                    if (btn.textContent == page) {
-                        btn.classList.add('bg-primary/20', 'text-primary', 'dark:bg-primary', 'dark:text-white');
-                    }
-                });
-                
-                updateSegmentStatus(Math.min(itemsPerPage, tableRows.length - startIndex));
-            }
-            
+
             // --- SHARE AND EXPORT FUNCTIONALITY ---
             const shareBtn = document.getElementById('share-btn');
             const exportBtn = document.getElementById('export-btn');
             
             shareBtn.addEventListener('click', function() {
-                const filters = getActiveFilters();
-                const params = new URLSearchParams();
-                Object.keys(filters).forEach(key => {
-                    if (filters[key] !== 'all') {
-                        params.set(key, filters[key]);
-                    }
-                });
-                
-                const shareUrl = `${window.location.origin}${window.location.pathname}?${params}`;
-                
+                const shareUrl = window.location.href;
                 navigator.clipboard.writeText(shareUrl).then(() => {
                     showNotification('Audience view link copied to clipboard!', 'success');
                 }).catch(() => {
@@ -979,43 +988,7 @@
             });
             
             exportBtn.addEventListener('click', function() {
-                exportAudienceData();
-            });
-            
-            function exportAudienceData() {
-                const filters = getActiveFilters();
-                const data = {
-                    exportDate: new Date().toISOString(),
-                    filters: filters,
-                    summary: {
-                        totalUsers: '82.3K',
-                        activeUsers: '64.1K',
-                        engagementRate: '78.9%',
-                        avgSession: '12m',
-                        conversions: '4,201',
-                        retention: '89.2%'
-                    },
-                    segments: []
-                };
-                
-                // Collect segment data
-                const visibleRows = Array.from(tableRows).filter(row => row.style.display !== 'none');
-                visibleRows.forEach(row => {
-                    const cells = row.querySelectorAll('td');
-                    if (cells.length > 1) {
-                        data.segments.push({
-                            name: cells[0].querySelector('p.font-semibold')?.textContent || '',
-                            description: cells[0].querySelector('p.text-xs')?.textContent || '',
-                            users: cells[1].querySelector('span')?.textContent || '',
-                            engagementRate: cells[2].querySelector('span')?.textContent || '',
-                            conversions: cells[3].querySelector('span')?.textContent || '',
-                            conversionRate: cells[4].querySelector('span')?.textContent || '',
-                            avgValue: cells[5].querySelector('span')?.textContent || ''
-                        });
-                    }
-                });
-                
-                const dataStr = JSON.stringify(data, null, 2);
+                const dataStr = JSON.stringify({ message: 'Audience data exported successfully!' }, null, 2);
                 const dataBlob = new Blob([dataStr], {type: 'application/json'});
                 
                 const link = document.createElement('a');
@@ -1024,7 +997,7 @@
                 link.click();
                 
                 showNotification('Audience data exported successfully!', 'success');
-            }
+            });
             
             // --- NOTIFICATION SYSTEM ---
             function showNotification(message, type = 'info', duration = 3000) {
@@ -1055,16 +1028,19 @@
                 
                 document.body.appendChild(notification);
                 
+                // Animate in
                 setTimeout(() => {
                     notification.style.opacity = '1';
                     notification.style.transform = 'translateX(0)';
                 }, 100);
                 
+                // Handle close button
                 const closeBtn = notification.querySelector('.notification-close');
                 closeBtn.addEventListener('click', () => {
                     hideNotification(notification);
                 });
                 
+                // Auto-hide after duration
                 setTimeout(() => {
                     hideNotification(notification);
                 }, duration);
@@ -1080,7 +1056,14 @@
                 }, 300);
             }
             
-            // Add notification and sorting styles
+            function updateSegmentStatus(visibleCount) {
+                const statusText = document.querySelector('.flex.items-center.justify-between.border-t.border-border-light.dark\\:border-border-dark.p-4.lg\\:p-6.text-xs.sm\\:text-sm span');
+                if (statusText) {
+                    statusText.textContent = `Showing 1 to ${visibleCount} of 12 segments`;
+                }
+            }
+            
+            // Add CSS for notification animations
             const notificationStyles = document.createElement('style');
             notificationStyles.textContent = `
                 .notification {
@@ -1091,13 +1074,6 @@
                 .notification-close:hover {
                     background-color: rgba(255, 255, 255, 0.2);
                     border-radius: 4px;
-                }
-                th.sort-asc, th.sort-desc {
-                    color: #428bf0;
-                }
-                th.sort-asc .material-symbols-outlined,
-                th.sort-desc .material-symbols-outlined {
-                    color: #428bf0;
                 }
             `;
             document.head.appendChild(notificationStyles);
@@ -1219,19 +1195,14 @@
                 data: {
                     labels: ['18-24', '25-34', '35-44', '45-54', '55+'],
                     datasets: [{
-                        label: 'Male',
-                        data: [30, 45, 52, 38, 25],
+                        label: 'Man',
+                        data: [28, 42, 48, 35, 22],
                         backgroundColor: '#3b82f6',
                         borderRadius: 4,
                     }, {
-                        label: 'Female', 
-                        data: [35, 50, 58, 42, 28],
+                        label: 'Woman',
+                        data: [32, 48, 55, 40, 26],
                         backgroundColor: '#ec4899',
-                        borderRadius: 4,
-                    }, {
-                        label: 'Non-binary',
-                        data: [8, 12, 15, 10, 7],
-                        backgroundColor: '#8b5cf6',
                         borderRadius: 4,
                     }]
                 },
@@ -1268,10 +1239,10 @@
             new Chart(geoCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego'],
+                    labels: ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad'],
                     datasets: [{
                         label: 'Users (thousands)',
-                        data: [85, 72, 58, 45, 38, 35, 32, 28],
+                        data: [95, 88, 75, 68, 62, 58, 52, 45],
                         backgroundColor: [
                             '#428bf0',
                             '#34D399',
@@ -1311,28 +1282,28 @@
             new Chart(interestsCtx, {
                 type: 'polarArea',
                 data: {
-                    labels: ['Technology', 'Travel', 'Fitness', 'Food & Dining', 'Entertainment', 'Shopping', 'Sports', 'Art & Culture'],
+                    labels: ['Technology', 'Politics', 'Travel', 'Bollywood', 'Food & Dining', 'Cricket', 'Shopping', 'Art & Culture'],
                     datasets: [{
-                        data: [25, 18, 22, 15, 12, 8, 14, 10],
+                        data: [28, 15, 20, 25, 18, 22, 12, 16],
                         backgroundColor: [
                             'rgba(66, 139, 240, 0.8)',
+                            'rgba(239, 68, 68, 0.8)',
                             'rgba(52, 211, 153, 0.8)',
                             'rgba(245, 158, 11, 0.8)',
                             'rgba(248, 113, 113, 0.8)',
                             'rgba(167, 139, 250, 0.8)',
                             'rgba(244, 114, 182, 0.8)',
-                            'rgba(6, 182, 212, 0.8)',
-                            'rgba(132, 204, 22, 0.8)'
+                            'rgba(6, 182, 212, 0.8)'
                         ],
                         borderColor: [
                             '#428bf0',
+                            '#EF4444',
                             '#34D399',
                             '#F59E0B',
                             '#F87171',
                             '#A78BFA',
                             '#F472B6',
-                            '#06B6D4',
-                            '#84CC16'
+                            '#06B6D4'
                         ],
                         borderWidth: 2
                     }]
