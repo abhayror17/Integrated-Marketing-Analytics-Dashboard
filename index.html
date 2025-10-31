@@ -4,6 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <title>Integrated Media Advertisement Dashboard</title>
 
     <!-- Scripts & Fonts -->
@@ -151,16 +153,38 @@
 
         /* Enhanced mobile/tablet responsiveness */
         @media (max-width: 768px) {
-            /* Fix dropdown positioning */
-            .dropdown-menu {
+            /* Fix dropdown positioning - ensure proper mobile behavior */
+            .filter-dropdown .dropdown-menu {
                 position: fixed !important;
-                top: 100% !important;
+                top: auto !important;
                 left: 0 !important;
                 right: 0 !important;
                 width: 100vw !important;
                 max-height: 60vh !important;
                 overflow-y: auto !important;
                 z-index: 99999 !important;
+                margin-top: 0 !important;
+                border-radius: 0 !important;
+                border-left: none !important;
+                border-right: none !important;
+                border-bottom: none !important;
+                transform: translateY(0) !important;
+            }
+            
+            /* Fix filter grid on mobile */
+            #filter-grid {
+                display: block !important;
+            }
+            
+            .filter-dropdown {
+                width: 100% !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            /* Ensure proper spacing */
+            .filter-btn {
+                min-height: 48px !important;
+                touch-action: manipulation !important;
             }
             
             /* Improve chart containers on mobile */
@@ -925,9 +949,10 @@
 
    <!-- Mobile Footer - Inline -->
    <footer class="lg:hidden fixed bottom-0 left-0 right-0 z-20 bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark">
-       <div class="px-4 py-2">
-           <div class="flex items-center justify-center">
-               <span class="text-xs text-subtle-text-light dark:text-subtle-text-dark">© 2025 TABSONS</span>
+       <div class="px-4 py-3">
+           <div class="flex items-center justify-between">
+               <span class="text-xs text-subtle-text-light dark:text-subtle-text-dark">© 2025 TABSONS. All rights reserved.</span>
+               <span class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Version 1.0</span>
            </div>
        </div>
    </footer>
@@ -935,9 +960,13 @@
     </div>
 
     <script>
-        // Apply theme immediately to prevent flash
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+        // Apply theme immediately to prevent flash - execute before any content renders
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const theme = savedTheme === 'dark' ? 'dark' : 'light';
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+            localStorage.setItem('theme', theme);
+        })();
         
         document.addEventListener('DOMContentLoaded', function() {
             // --- MOBILE MENU FUNCTIONALITY ---
@@ -1236,8 +1265,13 @@
                 const filterText = dropdown.querySelector('.filter-text');
                 const options = menu.querySelectorAll('.dropdown-option');
                 
-                // Toggle dropdown on button click
+                // Enhanced mobile touch handling
+                let touchStartY = 0;
+                let touchStartX = 0;
+                
+                // Toggle dropdown on button click/touch
                 button.addEventListener('click', function(e) {
+                    e.preventDefault();
                     e.stopPropagation();
                     
                     // Close all other dropdowns
@@ -1247,12 +1281,38 @@
                         }
                     });
                     
+                    // Toggle current dropdown
+                    const isHidden = menu.classList.contains('hidden');
                     menu.classList.toggle('hidden');
+                    
+                    // Enhanced mobile positioning if needed
+                    if (window.innerWidth <= 768 && isHidden) {
+                        // Ensure menu is properly positioned for mobile
+                        const rect = button.getBoundingClientRect();
+                        menu.style.position = 'fixed';
+                        menu.style.top = (rect.bottom + window.scrollY + 2) + 'px';
+                        menu.style.left = '0';
+                        menu.style.right = '0';
+                        menu.style.width = '100vw';
+                        menu.style.zIndex = '99999';
+                        menu.style.maxHeight = '60vh';
+                        menu.style.overflowY = 'auto';
+                        menu.style.transform = 'translateY(0)';
+                    }
+                    
+                    console.log('Filter dropdown toggled:', dropdown.dataset.filter, !isHidden);
                 });
                 
-                // Handle option selection
+                // Touch start for gesture detection
+                button.addEventListener('touchstart', function(e) {
+                    touchStartY = e.touches[0].clientY;
+                    touchStartX = e.touches[0].clientX;
+                }, { passive: true });
+                
+                // Handle option selection with touch support
                 options.forEach(option => {
                     option.addEventListener('click', function(e) {
+                        e.preventDefault();
                         e.stopPropagation();
                         const value = this.dataset.value;
                         filterText.textContent = value;
@@ -1267,11 +1327,43 @@
                 });
             });
             
-            // Close dropdowns when clicking outside
-            document.addEventListener('click', function() {
-                filterDropdowns.forEach(dropdown => {
-                    dropdown.querySelector('.dropdown-menu').classList.add('hidden');
-                });
+            // Close dropdowns when clicking/touching outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.filter-dropdown')) {
+                    filterDropdowns.forEach(dropdown => {
+                        dropdown.querySelector('.dropdown-menu').classList.add('hidden');
+                    });
+                }
+            });
+            
+            // Handle touch events for closing dropdowns
+            document.addEventListener('touchstart', function(e) {
+                if (!e.target.closest('.filter-dropdown')) {
+                    filterDropdowns.forEach(dropdown => {
+                        dropdown.querySelector('.dropdown-menu').classList.add('hidden');
+                    });
+                }
+            }, { passive: true });
+            
+            // Handle window resize to reset dropdown positions
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    // Reset to desktop positioning
+                    filterDropdowns.forEach(dropdown => {
+                        const menu = dropdown.querySelector('.dropdown-menu');
+                        if (menu) {
+                            menu.style.position = '';
+                            menu.style.top = '';
+                            menu.style.left = '';
+                            menu.style.right = '';
+                            menu.style.width = '';
+                            menu.style.zIndex = '';
+                            menu.style.maxHeight = '';
+                            menu.style.overflowY = '';
+                            menu.style.transform = '';
+                        }
+                    });
+                }
             });
             
             // Reset filters functionality
