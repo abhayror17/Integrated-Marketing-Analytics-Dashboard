@@ -127,14 +127,64 @@
 </head>
 
 <body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden">
+        <div class="w-64 h-full bg-card-light dark:bg-card-dark shadow-xl transform -translate-x-full transition-transform duration-300 ease-in-out" id="mobile-menu">
+            <div class="p-4 border-b border-border-light dark:border-border-dark">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAe1DuBqgz-Dwzu6hPDQwfhWeHZnB0RG99sLofEPVPjidVTASZwxNy87zjeElIoFK2VzO-xiNqmgJZAmGOs9CtRkTZdk_XDLwJLPh9a6Ayhd1Ny_NPNoj0XZy6Xu99spoMz4rnkc4yHWeB-buhibpyow8DSctTZYGnXOm6_AHW8lGiOxZkvquZnETyzcK92b_gsspxWUF4VEIjw3OTNAjOP-WtJCvHysrmTLslbIKYB_LDHTd21IFECqk2W6OOPncmPq3VYTrHDrWY");'></div>
+                        <div>
+                            <h2 class="text-text-light dark:text-text-dark text-base font-bold">TABSONS</h2>
+                            <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm">Workspace</p>
+                        </div>
+                    </div>
+                    <button id="close-mobile-menu" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg lg:hidden">
+                        <span class="material-symbols-outlined text-gray-500">close</span>
+                    </button>
+                </div>
+            </div>
+            <nav class="p-4 flex-1 overflow-y-auto">
+                <div class="flex flex-col gap-2">
+                    <a class="flex items-center gap-3 px-3 py-3 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg min-h-[48px]" href="index.html">
+                        <span class="material-symbols-outlined">dashboard</span>
+                        <p class="text-sm font-medium leading-normal">Dashboard</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-3 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg min-h-[48px]" href="campaign.html">
+                        <span class="material-symbols-outlined">campaign</span>
+                        <p class="text-sm font-medium leading-normal">Campaigns</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-3 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg min-h-[48px]" href="audience.html">
+                        <span class="material-symbols-outlined">groups</span>
+                        <p class="text-sm font-medium leading-normal">Audience</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary min-h-[48px]" href="reports.html">
+                        <span class="material-symbols-outlined">analytics</span>
+                        <p class="text-sm font-medium leading-normal">Reports</p>
+                    </a>
+                </div>
+                <div class="mt-8 flex flex-col gap-2">
+                    <a class="flex items-center gap-3 px-3 py-3 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg min-h-[48px]" href="#">
+                        <span class="material-symbols-outlined">settings</span>
+                        <p class="text-sm font-medium leading-normal">Settings</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-3 text-subtle-text-light dark:text-subtle-text-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg min-h-[48px]" href="#">
+                        <span class="material-symbols-outlined">help</span>
+                        <p class="text-sm font-medium leading-normal">Support</p>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </div>
+
     <div class="flex h-screen overflow-hidden">
-        <!-- Sidebar -->
-        <aside class="flex w-64 flex-col border-r border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-4">
+        <!-- Desktop Sidebar -->
+        <aside class="hidden lg:flex w-64 flex-col border-r border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-4">
              <div class="flex-shrink-0">
                 <div class="flex items-center gap-3">
                     <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAe1DuBqgz-Dwzu6hPDQwfhWeHZnB0RG99sLofEPVPjidVTASZwxNy87zjeElIoFK2VzO-xiNqmgJZAmGOs9CtRkTZdk_XDLwJLPh9a6Ayhd1Ny_NPNoj0XZy6Xu99spoMz4rnkc4yHWeB-buhibpyow8DSctTZYGnXOm6_AHW8lGiOxZkvquZnETyzcK92b_gsspxWUF4VEIjw3OTNAjOP-WtJCvHysrmTLslbIKYB_LDHTd21IFECqk2W6OOPncmPq3VYTrHDrWY");'></div>
                     <div class="flex flex-col">
-                        <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">Marketing Co.</h1>
+                        <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">TABSONS</h1>
                         <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-normal leading-normal">Workspace</p>
                     </div>
                 </div>
@@ -151,160 +201,182 @@
             </div>
         </aside>
 
+        <!-- Mobile Header -->
+        <div class="lg:hidden fixed top-0 left-0 right-0 z-30 bg-card-light dark:bg-card-dark border-b border-border-light dark:border-border-dark">
+            <div class="flex items-center justify-between p-4">
+                <button id="mobile-menu-button" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                    <span class="material-symbols-outlined text-gray-600 dark:text-gray-400">menu</span>
+                </button>
+                <div class="flex items-center gap-2">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAe1DuBqgz-Dwzu6hPDQwfhWeHZnB0RG99sLofEPVPjidVTASZwxNy87zjeElIoFK2VzO-xiNqmgJZAmGOs9CtRkTZdk_XDLwJLPh9a6Ayhd1Ny_NPNoj0XZy6Xu99spoMz4rnkc4yHWeB-buhibpyow8DSctTZYGnXOm6_AHW8lGiOxZkvquZnETyzcK92b_gsspxWUF4VEIjw3OTNAjOP-WtJCvHysrmTLslbIKYB_LDHTd21IFECqk2W6OOPncmPq3VYTrHDrWY");'></div>
+                    <span class="text-text-light dark:text-text-dark font-semibold">Reports</span>
+                </div>
+                <button id="theme-toggle-mobile" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                    <span id="theme-icon-mobile" class="material-symbols-outlined text-gray-600 dark:text-gray-400">dark_mode</span>
+                </button>
+            </div>
+        </div>
+
         <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto">
-            <div class="p-6 lg:p-8 space-y-8 animate-fade-in">
+        <main class="flex-1 overflow-y-auto pt-16 lg:pt-0">
+            <div class="p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in">
                 <!-- Enhanced Header -->
-                <div class="gradient-bg rounded-2xl p-8 text-white relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-32 translate-x-32"></div>
-                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full translate-y-24 -translate-x-24"></div>
-                    <div class="absolute top-1/2 left-1/2 w-96 h-96 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 pulse-ring"></div>
+                <div class="gradient-bg rounded-xl lg:rounded-2xl p-4 sm:p-6 lg:p-8 text-white relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 sm:w-48 lg:w-64 h-32 sm:h-48 lg:h-64 bg-white/10 rounded-full -translate-y-16 sm:-translate-y-24 lg:-translate-y-32 translate-x-16 sm:translate-x-24 lg:translate-x-32"></div>
+                    <div class="absolute bottom-0 left-0 w-24 sm:w-32 lg:w-48 h-24 sm:h-32 lg:h-48 bg-white/10 rounded-full translate-y-12 sm:translate-y-16 lg:translate-y-24 -translate-x-12 sm:-translate-x-16 lg:-translate-x-24"></div>
+                    <div class="absolute top-1/2 left-1/2 w-48 sm:w-64 lg:w-96 h-48 sm:h-64 lg:h-96 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 pulse-ring"></div>
                     <div class="relative z-10">
-                        <div class="flex flex-wrap items-center justify-between gap-4">
-                            <div class="flex flex-col gap-3">
-                                <h1 class="text-4xl font-bold leading-tight tracking-tight">Reports & Analytics</h1>
-                                <p class="text-white/90 text-lg font-normal leading-relaxed">Generate comprehensive reports and export your marketing data with advanced analytics</p>
-                                <div class="flex items-center gap-6 text-white/80">
+                        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-6">
+                            <div class="flex flex-col gap-2 sm:gap-3">
+                                <h1 class="text-xl sm:text-2xl lg:text-4xl font-bold leading-tight tracking-tight">Reports & Analytics</h1>
+                                <p class="text-white/90 text-sm sm:text-base lg:text-lg font-normal leading-relaxed">Generate comprehensive reports and export your marketing data with advanced analytics</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap items-start sm:items-center gap-3 sm:gap-4 lg:gap-6 text-white/80">
                                     <div class="flex items-center gap-2">
-                                        <span class="material-symbols-outlined text-lg animate-bounce-subtle">trending_up</span>
-                                        <span class="text-sm font-medium">247 Reports Generated This Month</span>
+                                        <span class="material-symbols-outlined text-sm sm:text-base lg:text-lg animate-bounce-subtle">trending_up</span>
+                                        <span class="text-xs sm:text-sm font-medium">247 Reports Generated This Month</span>
                                     </div>
                                     <div class="flex items-center gap-2">
-                                        <span class="material-symbols-outlined text-lg">download</span>
-                                        <span class="text-sm font-medium">2.3GB Exported Data</span>
+                                        <span class="material-symbols-outlined text-sm sm:text-base lg:text-lg">download</span>
+                                        <span class="text-xs sm:text-sm font-medium">2.3GB Exported Data</span>
                                     </div>
                                     <div class="flex items-center gap-2">
-                                        <span class="material-symbols-outlined text-lg">schedule</span>
-                                        <span class="text-sm font-medium">32 Scheduled Reports</span>
+                                        <span class="material-symbols-outlined text-sm sm:text-base lg:text-lg">schedule</span>
+                                        <span class="text-xs sm:text-sm font-medium">32 Scheduled Reports</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-3">
-                                <button id="theme-toggle" class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white/20 text-white border border-white/30 text-sm font-medium leading-normal hover:bg-white/30 backdrop-blur-sm">
-                                    <span id="theme-icon" class="material-symbols-outlined text-base">light_mode</span>
-                                    <span id="theme-text">Light</span>
+                            <div class="flex flex-wrap items-center gap-2 sm:gap-3 lg:flex-nowrap">
+                                <button id="theme-toggle-desktop" class="hidden lg:flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white/20 text-white border border-white/30 text-sm font-medium leading-normal hover:bg-white/30 backdrop-blur-sm">
+                                    <span id="theme-icon-desktop" class="material-symbols-outlined text-base">light_mode</span>
+                                    <span id="theme-text-desktop">Light</span>
                                 </button>
-                                <button id="share-btn" class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white/20 text-white border border-white/30 text-sm font-medium leading-normal hover:bg-white/30 backdrop-blur-sm"><span class="material-symbols-outlined text-base">share</span><span>Share</span></button>
-                                <button id="ai-insights-btn" class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white text-primary text-sm font-medium leading-normal hover:bg-gray-100 shadow-sm"><span class="material-symbols-outlined text-base">auto_awesome</span><span>AI Insights</span></button>
+                                <button id="share-btn" class="flex items-center justify-center gap-1 sm:gap-2 rounded-lg h-10 sm:h-10 px-3 sm:px-4 bg-white/20 text-white border border-white/30 text-xs sm:text-sm font-medium leading-normal hover:bg-white/30 backdrop-blur-sm">
+                                    <span class="material-symbols-outlined text-sm sm:text-base">share</span>
+                                    <span class="hidden sm:inline">Share</span>
+                                </button>
+                                <button id="ai-insights-btn" class="flex items-center justify-center gap-1 sm:gap-2 rounded-lg h-10 sm:h-10 px-3 sm:px-4 bg-white text-primary text-xs sm:text-sm font-medium leading-normal hover:bg-gray-100 shadow-sm">
+                                    <span class="material-symbols-outlined text-sm sm:text-base">auto_awesome</span>
+                                    <span class="hidden sm:inline">AI Insights</span>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Enhanced Quick Stats Cards -->
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 animate-slide-up">
-                    <div class="metric-card rounded-xl p-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-6 animate-slide-up">
+                    <div class="metric-card rounded-lg sm:rounded-xl p-4 sm:p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Total Reports</p>
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-xs sm:text-sm font-medium">Total Reports</p>
                                 <div class="flex items-baseline gap-2">
-                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">247</p>
-                                    <p class="text-green-500 text-sm font-medium">+12 this week</p>
+                                    <p class="text-xl sm:text-2xl lg:text-3xl font-bold text-text-light dark:text-text-dark">247</p>
+                                    <p class="text-green-500 text-xs sm:text-sm font-medium">+12 this week</p>
                                 </div>
                             </div>
-                            <div class="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-2xl animate-pulse-slow">assessment</span>
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-lg bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-lg sm:text-xl lg:text-2xl animate-pulse-slow">assessment</span>
                             </div>
                         </div>
                     </div>
-                    <div class="metric-card rounded-xl p-6">
+                    <div class="metric-card rounded-lg sm:rounded-xl p-4 sm:p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Active Templates</p>
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-xs sm:text-sm font-medium">Active Templates</p>
                                 <div class="flex items-baseline gap-2">
-                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">18</p>
-                                    <p class="text-green-500 text-sm font-medium">+3 this month</p>
+                                    <p class="text-xl sm:text-2xl lg:text-3xl font-bold text-text-light dark:text-text-dark">18</p>
+                                    <p class="text-green-500 text-xs sm:text-sm font-medium">+3 this month</p>
                                 </div>
                             </div>
-                            <div class="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-500/20 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-2xl">description</span>
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-lg bg-green-100 dark:bg-green-500/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-lg sm:text-xl lg:text-2xl">description</span>
                             </div>
                         </div>
                     </div>
-                    <div class="metric-card rounded-xl p-6">
+                    <div class="metric-card rounded-lg sm:rounded-xl p-4 sm:p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Scheduled Reports</p>
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-xs sm:text-sm font-medium">Scheduled Reports</p>
                                 <div class="flex items-baseline gap-2">
-                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">32</p>
-                                    <p class="text-blue-500 text-sm font-medium">8 weekly, 24 monthly</p>
+                                    <p class="text-xl sm:text-2xl lg:text-3xl font-bold text-text-light dark:text-text-dark">32</p>
+                                    <p class="text-blue-500 text-xs sm:text-sm font-medium">8 weekly, 24 monthly</p>
                                 </div>
                             </div>
-                            <div class="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-2xl">schedule</span>
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-lg bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-lg sm:text-xl lg:text-2xl">schedule</span>
                             </div>
                         </div>
                     </div>
-                    <div class="metric-card rounded-xl p-6">
+                    <div class="metric-card rounded-lg sm:rounded-xl p-4 sm:p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Data Sources</p>
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-xs sm:text-sm font-medium">Data Sources</p>
                                 <div class="flex items-baseline gap-2">
-                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">7</p>
-                                    <p class="text-green-500 text-sm font-medium">All connected</p>
+                                    <p class="text-xl sm:text-2xl lg:text-3xl font-bold text-text-light dark:text-text-dark">7</p>
+                                    <p class="text-green-500 text-xs sm:text-sm font-medium">All connected</p>
                                 </div>
                             </div>
-                            <div class="w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-2xl">hub</span>
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-lg bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-lg sm:text-xl lg:text-2xl">hub</span>
                             </div>
                         </div>
                     </div>
-                    <div class="metric-card rounded-xl p-6">
+                    <div class="metric-card rounded-lg sm:rounded-xl p-4 sm:p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Export Volume</p>
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-xs sm:text-sm font-medium">Export Volume</p>
                                 <div class="flex items-baseline gap-2">
-                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">2.3GB</p>
-                                    <p class="text-green-500 text-sm font-medium">+450MB this week</p>
+                                    <p class="text-xl sm:text-2xl lg:text-3xl font-bold text-text-light dark:text-text-dark">2.3GB</p>
+                                    <p class="text-green-500 text-xs sm:text-sm font-medium">+450MB this week</p>
                                 </div>
                             </div>
-                            <div class="w-12 h-12 rounded-lg bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-2xl">storage</span>
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-lg bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-lg sm:text-xl lg:text-2xl">storage</span>
                             </div>
                         </div>
                     </div>
-                    <div class="metric-card rounded-xl p-6">
+                    <div class="metric-card rounded-lg sm:rounded-xl p-4 sm:p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-sm font-medium">Success Rate</p>
+                                <p class="text-subtle-text-light dark:text-subtle-text-dark text-xs sm:text-sm font-medium">Success Rate</p>
                                 <div class="flex items-baseline gap-2">
-                                    <p class="text-3xl font-bold text-text-light dark:text-text-dark">98.7%</p>
-                                    <p class="text-green-500 text-sm font-medium">+0.2%</p>
+                                    <p class="text-xl sm:text-2xl lg:text-3xl font-bold text-text-light dark:text-text-dark">98.7%</p>
+                                    <p class="text-green-500 text-xs sm:text-sm font-medium">+0.2%</p>
                                 </div>
                             </div>
-                            <div class="w-12 h-12 rounded-lg bg-pink-100 dark:bg-pink-500/20 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-pink-600 dark:text-pink-400 text-2xl">verified</span>
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-lg bg-pink-100 dark:bg-pink-500/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-pink-600 dark:text-pink-400 text-lg sm:text-xl lg:text-2xl">verified</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Main Content Grid -->
-                <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
                     <!-- Enhanced Report Generation Panel -->
-                    <div class="xl:col-span-1 space-y-6">
+                    <div class="xl:col-span-1 space-y-4 sm:space-y-6">
                         <!-- Quick Report Builder -->
-                        <div class="chart-container rounded-2xl border border-border-light dark:border-border-dark p-6 shadow-sm">
-                            <div class="flex items-center gap-3 mb-6">
-                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-white text-xl">add_circle</span>
+                        <div class="chart-container rounded-xl lg:rounded-2xl border border-border-light dark:border-border-dark p-4 sm:p-6 shadow-sm">
+                            <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-white text-lg sm:text-xl">add_circle</span>
                                 </div>
                                 <div>
-                                    <h2 class="text-xl font-semibold text-text-light dark:text-text-dark">Quick Report Builder</h2>
-                                    <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">Create custom reports in seconds</p>
+                                    <h2 class="text-lg sm:text-xl font-semibold text-text-light dark:text-text-dark">Quick Report Builder</h2>
+                                    <p class="text-xs sm:text-sm text-subtle-text-light dark:text-subtle-text-dark">Create custom reports in seconds</p>
                                 </div>
                             </div>
                             
                             <div class="space-y-4">
                                 <div>
-                                    <label class="text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Report Name</label>
+                                    <label class="text-xs sm:text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Report Name</label>
                                     <input class="w-full rounded-lg border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800/50 text-text-light dark:text-text-dark shadow-sm focus:border-primary focus:ring-primary px-3 py-2" id="report-name" placeholder="e.g., Q3 Performance Summary" type="text"/>
                                 </div>
                                 
-                                <div class="grid grid-cols-2 gap-3">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div>
-                                        <label class="text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Date Range</label>
-                                        <select class="w-full rounded-lg border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800/50 text-text-light dark:text-text-dark shadow-sm focus:border-primary focus:ring-primary px-3 py-2 text-sm" id="date-range">
+                                        <label class="text-xs sm:text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Date Range</label>
+                                        <select class="w-full rounded-lg border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800/50 text-text-light dark:text-text-dark shadow-sm focus:border-primary focus:ring-primary px-3 py-2 text-xs sm:text-sm" id="date-range">
                                             <option>Last 7 Days</option>
                                             <option>Last 30 Days</option>
                                             <option>Last 90 Days</option>
@@ -314,8 +386,8 @@
                                         </select>
                                     </div>
                                     <div>
-                                        <label class="text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Format</label>
-                                        <select class="w-full rounded-lg border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800/50 text-text-light dark:text-text-dark shadow-sm focus:border-primary focus:ring-primary px-3 py-2 text-sm" id="export-format">
+                                        <label class="text-xs sm:text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Format</label>
+                                        <select class="w-full rounded-lg border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800/50 text-text-light dark:text-text-dark shadow-sm focus:border-primary focus:ring-primary px-3 py-2 text-xs sm:text-sm" id="export-format">
                                             <option>PDF</option>
                                             <option>Excel (XLSX)</option>
                                             <option>CSV</option>
@@ -325,105 +397,106 @@
                                 </div>
 
                                 <div>
-                                    <label class="text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Data Sources</label>
-                                    <div class="space-y-3">
+                                    <label class="text-xs sm:text-sm font-medium text-subtle-text-light dark:text-subtle-text-dark block mb-2">Data Sources</label>
+                                    <div class="space-y-2 sm:space-y-3">
                                         <label class="flex items-center gap-3 cursor-pointer group">
                                             <input type="checkbox" class="rounded border-border-light dark:border-border-dark text-primary focus:ring-primary" checked>
-                                            <span class="text-sm text-text-light dark:text-text-dark group-hover:text-primary transition-colors">Campaign Performance</span>
+                                            <span class="text-xs sm:text-sm text-text-light dark:text-text-dark group-hover:text-primary transition-colors">Campaign Performance</span>
                                         </label>
                                         <label class="flex items-center gap-3 cursor-pointer group">
                                             <input type="checkbox" class="rounded border-border-light dark:border-border-dark text-primary focus:ring-primary" checked>
-                                            <span class="text-sm text-text-light dark:text-text-dark group-hover:text-primary transition-colors">Audience Analytics</span>
+                                            <span class="text-xs sm:text-sm text-text-light dark:text-text-dark group-hover:text-primary transition-colors">Audience Analytics</span>
                                         </label>
                                         <label class="flex items-center gap-3 cursor-pointer group">
                                             <input type="checkbox" class="rounded border-border-light dark:border-border-dark text-primary focus:ring-primary">
-                                            <span class="text-sm text-text-light dark:text-text-dark group-hover:text-primary transition-colors">Financial Data</span>
+                                            <span class="text-xs sm:text-sm text-text-light dark:text-text-dark group-hover:text-primary transition-colors">Financial Data</span>
                                         </label>
                                         <label class="flex items-center gap-3 cursor-pointer group">
                                             <input type="checkbox" class="rounded border-border-light dark:border-border-dark text-primary focus:ring-primary">
-                                            <span class="text-sm text-text-light dark:text-text-dark group-hover:text-primary transition-colors">Competitor Analysis</span>
+                                            <span class="text-xs sm:text-sm text-text-light dark:text-text-dark group-hover:text-primary transition-colors">Competitor Analysis</span>
                                         </label>
                                     </div>
                                 </div>
 
-                                <div class="flex gap-3 pt-4">
-                                    <button class="generate-report-btn flex-1 flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-3 text-sm font-semibold text-white hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg">
-                                        <span class="material-symbols-outlined text-base">play_arrow</span>
-                                        Generate Report
+                                <div class="flex gap-3 pt-2 sm:pt-4">
+                                    <button class="generate-report-btn flex-1 flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-3 sm:px-4 py-3 text-xs sm:text-sm font-semibold text-white hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg min-h-[48px] sm:min-h-[48px]">
+                                        <span class="material-symbols-outlined text-sm sm:text-base">play_arrow</span>
+                                        <span class="hidden sm:inline">Generate Report</span>
+                                        <span class="sm:hidden">Generate</span>
                                     </button>
-                                    <button class="schedule-report-btn flex items-center justify-center gap-2 rounded-lg bg-gray-200 dark:bg-gray-700 px-4 py-3 text-sm font-semibold text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
-                                        <span class="material-symbols-outlined text-base">schedule</span>
+                                    <button class="schedule-report-btn flex items-center justify-center gap-2 rounded-lg bg-gray-200 dark:bg-gray-700 px-3 sm:px-4 py-3 text-xs sm:text-sm font-semibold text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors min-h-[48px] sm:min-h-[48px]">
+                                        <span class="material-symbols-outlined text-sm sm:text-base">schedule</span>
                                     </button>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Enhanced Report Templates -->
-                        <div class="chart-container rounded-2xl border border-border-light dark:border-border-dark p-6 shadow-sm">
+                        <div class="chart-container rounded-xl lg:rounded-2xl border border-border-light dark:border-border-dark p-4 sm:p-6 shadow-sm">
                             <div class="flex items-center gap-3 mb-4">
-                                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-white text-xl">category</span>
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-white text-lg sm:text-xl">category</span>
                                 </div>
                                 <div>
-                                    <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Report Templates</h3>
-                                    <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">Pre-configured report layouts</p>
+                                    <h3 class="text-base sm:text-lg font-semibold text-text-light dark:text-text-dark">Report Templates</h3>
+                                    <p class="text-xs sm:text-sm text-subtle-text-light dark:text-subtle-text-dark">Pre-configured report layouts</p>
                                 </div>
                             </div>
                             <div class="space-y-3">
-                                <button class="template-btn w-full text-left p-4 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-500/10 dark:hover:to-purple-500/10 transition-all duration-200 group border border-transparent hover:border-blue-200 dark:hover:border-blue-700">
+                                <button class="template-btn w-full text-left p-3 sm:p-4 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-500/10 dark:hover:to-purple-500/10 transition-all duration-200 group border border-transparent hover:border-blue-200 dark:hover:border-blue-700 min-h-[56px] sm:min-h-[64px]">
                                     <div class="flex items-center justify-between">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
-                                                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-sm">description</span>
+                                        <div class="flex items-center gap-2 sm:gap-3">
+                                            <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
+                                                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-xs sm:text-sm">description</span>
                                             </div>
-                                            <div>
-                                                <p class="font-semibold text-text-light dark:text-text-dark group-hover:text-blue-600 dark:group-hover:text-blue-400">Executive Summary</p>
-                                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">High-level KPIs and performance overview</p>
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-semibold text-xs sm:text-sm text-text-light dark:text-text-dark group-hover:text-blue-600 dark:group-hover:text-blue-400 truncate">Executive Summary</p>
+                                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark hidden sm:block">High-level KPIs and performance overview</p>
                                             </div>
                                         </div>
-                                        <span class="material-symbols-outlined text-subtle-text-light dark:text-subtle-text-dark group-hover:text-blue-500">chevron_right</span>
+                                        <span class="material-symbols-outlined text-subtle-text-light dark:text-subtle-text-dark group-hover:text-blue-500 text-sm sm:text-base">chevron_right</span>
                                     </div>
                                 </button>
-                                <button class="template-btn w-full text-left p-4 rounded-xl hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 dark:hover:from-green-500/10 dark:hover:to-emerald-500/10 transition-all duration-200 group border border-transparent hover:border-green-200 dark:hover:border-green-700">
+                                <button class="template-btn w-full text-left p-3 sm:p-4 rounded-xl hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 dark:hover:from-green-500/10 dark:hover:to-emerald-500/10 transition-all duration-200 group border border-transparent hover:border-green-200 dark:hover:border-green-700 min-h-[56px] sm:min-h-[64px]">
                                     <div class="flex items-center justify-between">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-8 h-8 rounded-lg bg-green-100 dark:bg-green-500/20 flex items-center justify-center">
-                                                <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-sm">campaign</span>
+                                        <div class="flex items-center gap-2 sm:gap-3">
+                                            <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-green-100 dark:bg-green-500/20 flex items-center justify-center">
+                                                <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-xs sm:text-sm">campaign</span>
                                             </div>
-                                            <div>
-                                                <p class="font-semibold text-text-light dark:text-text-dark group-hover:text-green-600 dark:group-hover:text-green-400">Campaign Deep Dive</p>
-                                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Detailed campaign performance analysis</p>
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-semibold text-xs sm:text-sm text-text-light dark:text-text-dark group-hover:text-green-600 dark:group-hover:text-green-400 truncate">Campaign Deep Dive</p>
+                                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark hidden sm:block">Detailed campaign performance analysis</p>
                                             </div>
                                         </div>
-                                        <span class="material-symbols-outlined text-subtle-text-light dark:text-subtle-text-dark group-hover:text-green-500">chevron_right</span>
+                                        <span class="material-symbols-outlined text-subtle-text-light dark:text-subtle-text-dark group-hover:text-green-500 text-sm sm:text-base">chevron_right</span>
                                     </div>
                                 </button>
-                                <button class="template-btn w-full text-left p-4 rounded-xl hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 dark:hover:from-purple-500/10 dark:hover:to-pink-500/10 transition-all duration-200 group border border-transparent hover:border-purple-200 dark:hover:border-purple-700">
+                                <button class="template-btn w-full text-left p-3 sm:p-4 rounded-xl hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 dark:hover:from-purple-500/10 dark:hover:to-pink-500/10 transition-all duration-200 group border border-transparent hover:border-purple-200 dark:hover:border-purple-700 min-h-[56px] sm:min-h-[64px]">
                                     <div class="flex items-center justify-between">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center">
-                                                <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-sm">groups</span>
+                                        <div class="flex items-center gap-2 sm:gap-3">
+                                            <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center">
+                                                <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-xs sm:text-sm">groups</span>
                                             </div>
-                                            <div>
-                                                <p class="font-semibold text-text-light dark:text-text-dark group-hover:text-purple-600 dark:group-hover:text-purple-400">Audience Insights</p>
-                                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Demographics and behavior analysis</p>
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-semibold text-xs sm:text-sm text-text-light dark:text-text-dark group-hover:text-purple-600 dark:group-hover:text-purple-400 truncate">Audience Insights</p>
+                                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark hidden sm:block">Demographics and behavior analysis</p>
                                             </div>
                                         </div>
-                                        <span class="material-symbols-outlined text-subtle-text-light dark:text-subtle-text-dark group-hover:text-purple-500">chevron_right</span>
+                                        <span class="material-symbols-outlined text-subtle-text-light dark:text-subtle-text-dark group-hover:text-purple-500 text-sm sm:text-base">chevron_right</span>
                                     </div>
                                 </button>
-                                <button class="template-btn w-full text-left p-4 rounded-xl hover:bg-gradient-to-r hover:from-orange-50 hover:to-yellow-50 dark:hover:from-orange-500/10 dark:hover:to-yellow-500/10 transition-all duration-200 group border border-transparent hover:border-orange-200 dark:hover:border-orange-700">
+                                <button class="template-btn w-full text-left p-3 sm:p-4 rounded-xl hover:bg-gradient-to-r hover:from-orange-50 hover:to-yellow-50 dark:hover:from-orange-500/10 dark:hover:to-yellow-500/10 transition-all duration-200 group border border-transparent hover:border-orange-200 dark:hover:border-orange-700 min-h-[56px] sm:min-h-[64px]">
                                     <div class="flex items-center justify-between">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-8 h-8 rounded-lg bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center">
-                                                <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-sm">trending_up</span>
+                                        <div class="flex items-center gap-2 sm:gap-3">
+                                            <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center">
+                                                <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-xs sm:text-sm">trending_up</span>
                                             </div>
-                                            <div>
-                                                <p class="font-semibold text-text-light dark:text-text-dark group-hover:text-orange-600 dark:group-hover:text-orange-400">ROI Analysis</p>
-                                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Return on investment breakdown</p>
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-semibold text-xs sm:text-sm text-text-light dark:text-text-dark group-hover:text-orange-600 dark:group-hover:text-orange-400 truncate">ROI Analysis</p>
+                                                <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark hidden sm:block">Return on investment breakdown</p>
                                             </div>
                                         </div>
-                                        <span class="material-symbols-outlined text-subtle-text-light dark:text-subtle-text-dark group-hover:text-orange-500">chevron_right</span>
+                                        <span class="material-symbols-outlined text-subtle-text-light dark:text-subtle-text-dark group-hover:text-orange-500 text-sm sm:text-base">chevron_right</span>
                                     </div>
                                 </button>
                             </div>
@@ -506,227 +579,228 @@
                         </div>
 
                         <!-- Enhanced Generated Reports Table -->
-                        <div class="chart-container rounded-2xl border border-border-light dark:border-border-dark shadow-sm">
-                            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-border-light dark:border-border-dark p-6">
+                        <div class="chart-container rounded-xl lg:rounded-2xl border border-border-light dark:border-border-dark shadow-sm">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border-light dark:border-border-dark p-4 sm:p-6">
                                 <div>
-                                    <h3 class="text-xl font-semibold text-text-light dark:text-text-dark">Generated Reports</h3>
-                                    <p class="text-sm text-subtle-text-light dark:text-subtle-text-dark">Manage and download your generated reports</p>
+                                    <h3 class="text-lg sm:text-xl font-semibold text-text-light dark:text-text-dark">Generated Reports</h3>
+                                    <p class="text-xs sm:text-sm text-subtle-text-light dark:text-subtle-text-dark">Manage and download your generated reports</p>
                                 </div>
-                                <div class="flex items-center gap-3">
+                                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                                     <div class="relative">
                                         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-subtle-text-light dark:text-subtle-text-dark">search</span>
                                         <input class="pl-10 pr-4 py-2 rounded-lg border border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800/50 text-sm text-text-light dark:text-text-dark focus:border-primary focus:ring-primary" id="report-search" placeholder="Search reports..." type="text"/>
                                     </div>
-                                    <button class="flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-2 text-sm font-semibold text-white hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg">
-                                        <span class="material-symbols-outlined text-base">add</span>
-                                        New Report
+                                    <button class="flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-white hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg min-h-[48px] sm:min-h-[40px]">
+                                        <span class="material-symbols-outlined text-sm sm:text-base">add</span>
+                                        <span class="hidden sm:inline">New Report</span>
+                                        <span class="sm:hidden">Add</span>
                                     </button>
                                 </div>
                             </div>
 
                             <div class="overflow-x-auto">
-                                <table class="w-full text-left text-sm">
+                                <table class="w-full text-left text-xs sm:text-sm">
                                     <thead class="border-b border-border-light dark:border-border-dark text-xs uppercase text-subtle-text-light dark:text-subtle-text-dark">
                                         <tr>
-                                            <th class="px-6 py-4 font-medium">
-                                                <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Report Name <span class="material-symbols-outlined !text-base">swap_vert</span></div>
+                                            <th class="px-3 sm:px-6 py-3 sm:py-4 font-medium">
+                                                <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Report Name <span class="material-symbols-outlined !text-sm !sm:!text-base">swap_vert</span></div>
                                             </th>
-                                            <th class="px-6 py-4 font-medium">
-                                                <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Created <span class="material-symbols-outlined !text-base">swap_vert</span></div>
+                                            <th class="px-3 sm:px-6 py-3 sm:py-4 font-medium">
+                                                <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Created <span class="material-symbols-outlined !text-sm !sm:!text-base">swap_vert</span></div>
                                             </th>
-                                            <th class="px-6 py-4 font-medium">
-                                                <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Type <span class="material-symbols-outlined !text-base">swap_vert</span></div>
+                                            <th class="px-3 sm:px-6 py-3 sm:py-4 font-medium">
+                                                <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Type <span class="material-symbols-outlined !text-sm !sm:!text-base">swap_vert</span></div>
                                             </th>
-                                            <th class="px-6 py-4 font-medium">
-                                                <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Size <span class="material-symbols-outlined !text-base">swap_vert</span></div>
+                                            <th class="px-3 sm:px-6 py-3 sm:py-4 font-medium">
+                                                <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Size <span class="material-symbols-outlined !text-sm !sm:!text-base">swap_vert</span></div>
                                             </th>
-                                            <th class="px-6 py-4 font-medium">
-                                                <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Status <span class="material-symbols-outlined !text-base">swap_vert</span></div>
+                                            <th class="px-3 sm:px-6 py-3 sm:py-4 font-medium">
+                                                <div class="flex items-center gap-1.5 cursor-pointer hover:text-text-light dark:hover:text-text-dark">Status <span class="material-symbols-outlined !text-sm !sm:!text-base">swap_vert</span></div>
                                             </th>
-                                            <th class="px-6 py-4 font-medium">Actions</th>
+                                            <th class="px-3 sm:px-6 py-3 sm:py-4 font-medium">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-subtle-text-light dark:text-subtle-text-dark">
                                         <tr class="border-b border-border-light dark:border-border-dark hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-500/5 dark:hover:to-purple-500/5 transition-all duration-200">
-                                            <td class="px-6 py-4">
-                                                <div class="report-card p-3 rounded-lg">
-                                                    <div class="flex items-center gap-3">
-                                                        <div class="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
-                                                            <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-sm">picture_as_pdf</span>
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                                <div class="report-card p-2 sm:p-3 rounded-lg">
+                                                    <div class="flex items-center gap-2 sm:gap-3">
+                                                        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
+                                                            <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-xs sm:text-sm">picture_as_pdf</span>
                                                         </div>
-                                                        <div>
-                                                            <p class="font-semibold text-text-light dark:text-text-dark">Q3 2024 Marketing Performance</p>
-                                                            <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Executive summary with key insights and recommendations</p>
+                                                        <div class="flex-1 min-w-0">
+                                                            <p class="font-semibold text-xs sm:text-sm text-text-light dark:text-text-dark truncate">Q3 2024 Marketing Performance</p>
+                                                            <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark hidden sm:block">Executive summary with key insights and recommendations</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4">
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
                                                 <div>
-                                                    <p class="font-medium text-text-light dark:text-text-dark">Oct 27, 2024</p>
+                                                    <p class="font-medium text-xs sm:text-sm text-text-light dark:text-text-dark">Oct 27, 2024</p>
                                                     <p class="text-xs">2:34 PM</p>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4">
-                                                <span class="px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-500/20 text-blue-800 dark:text-blue-300 text-xs font-medium">Executive</span>
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                                <span class="px-2 sm:px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-500/20 text-blue-800 dark:text-blue-300 text-xs font-medium">Executive</span>
                                             </td>
-                                            <td class="px-6 py-4">
-                                                <span class="text-text-light dark:text-text-dark font-medium">2.4 MB</span>
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                                <span class="text-text-light dark:text-text-dark font-medium text-xs sm:text-sm">2.4 MB</span>
                                             </td>
-                                            <td class="px-6 py-4">
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
                                                 <div class="flex items-center gap-2">
                                                     <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                                                     <span class="text-green-700 dark:text-green-400 font-medium text-xs">Ready</span>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4">
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
                                                 <div class="flex items-center gap-1">
-                                                    <button class="download-btn p-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 transition-colors" data-report="Q3 2024 Marketing Performance">
-                                                        <span class="material-symbols-outlined text-base">download</span>
+                                                    <button class="download-btn p-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 transition-colors min-h-[48px] sm:min-h-[40px]" data-report="Q3 2024 Marketing Performance">
+                                                        <span class="material-symbols-outlined text-sm sm:text-base">download</span>
                                                     </button>
-                                                    <button class="share-btn p-2 rounded-lg hover:bg-green-100 dark:hover:bg-green-500/20 text-green-600 dark:text-green-400 transition-colors">
-                                                        <span class="material-symbols-outlined text-base">share</span>
+                                                    <button class="share-btn p-2 rounded-lg hover:bg-green-100 dark:hover:bg-green-500/20 text-green-600 dark:text-green-400 transition-colors min-h-[48px] sm:min-h-[40px]">
+                                                        <span class="material-symbols-outlined text-sm sm:text-base">share</span>
                                                     </button>
-                                                    <button class="delete-btn p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 transition-colors" data-report="Q3 2024 Marketing Performance">
-                                                        <span class="material-symbols-outlined text-base">delete</span>
+                                                    <button class="delete-btn p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 transition-colors min-h-[48px] sm:min-h-[40px]" data-report="Q3 2024 Marketing Performance">
+                                                        <span class="material-symbols-outlined text-sm sm:text-base">delete</span>
                                                     </button>
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr class="border-b border-border-light dark:border-border-dark hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 dark:hover:from-green-500/5 dark:hover:to-emerald-500/5 transition-all duration-200">
-                                            <td class="px-6 py-4">
-                                                <div class="report-card p-3 rounded-lg">
-                                                    <div class="flex items-center gap-3">
-                                                        <div class="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-500/20 flex items-center justify-center">
-                                                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-sm">table_chart</span>
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                                <div class="report-card p-2 sm:p-3 rounded-lg">
+                                                    <div class="flex items-center gap-2 sm:gap-3">
+                                                        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-green-100 dark:bg-green-500/20 flex items-center justify-center">
+                                                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-xs sm:text-sm">table_chart</span>
                                                         </div>
-                                                        <div>
-                                                            <p class="font-semibold text-text-light dark:text-text-dark">Campaign Performance Data</p>
-                                                            <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Detailed metrics and KPIs with trend analysis</p>
+                                                        <div class="flex-1 min-w-0">
+                                                            <p class="font-semibold text-xs sm:text-sm text-text-light dark:text-text-dark truncate">Campaign Performance Data</p>
+                                                            <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark hidden sm:block">Detailed metrics and KPIs with trend analysis</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4">
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
                                                 <div>
-                                                    <p class="font-medium text-text-light dark:text-text-dark">Oct 26, 2024</p>
+                                                    <p class="font-medium text-xs sm:text-sm text-text-light dark:text-text-dark">Oct 26, 2024</p>
                                                     <p class="text-xs">4:12 PM</p>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4">
-                                                <span class="px-3 py-1 rounded-full bg-green-100 dark:bg-green-500/20 text-green-800 dark:text-green-300 text-xs font-medium">Data Export</span>
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                                <span class="px-2 sm:px-3 py-1 rounded-full bg-green-100 dark:bg-green-500/20 text-green-800 dark:text-green-300 text-xs font-medium">Data Export</span>
                                             </td>
-                                            <td class="px-6 py-4">
-                                                <span class="text-text-light dark:text-text-dark font-medium">856 KB</span>
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                                <span class="text-text-light dark:text-text-dark font-medium text-xs sm:text-sm">856 KB</span>
                                             </td>
-                                            <td class="px-6 py-4">
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
                                                 <div class="flex items-center gap-2">
                                                     <div class="w-2 h-2 rounded-full bg-green-500"></div>
                                                     <span class="text-green-700 dark:text-green-400 font-medium text-xs">Ready</span>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4">
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
                                                 <div class="flex items-center gap-1">
-                                                    <button class="download-btn p-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 transition-colors" data-report="Campaign Performance Data">
-                                                        <span class="material-symbols-outlined text-base">download</span>
+                                                    <button class="download-btn p-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 transition-colors min-h-[48px] sm:min-h-[40px]" data-report="Campaign Performance Data">
+                                                        <span class="material-symbols-outlined text-sm sm:text-base">download</span>
                                                     </button>
-                                                    <button class="share-btn p-2 rounded-lg hover:bg-green-100 dark:hover:bg-green-500/20 text-green-600 dark:text-green-400 transition-colors">
-                                                        <span class="material-symbols-outlined text-base">share</span>
+                                                    <button class="share-btn p-2 rounded-lg hover:bg-green-100 dark:hover:bg-green-500/20 text-green-600 dark:text-green-400 transition-colors min-h-[48px] sm:min-h-[40px]">
+                                                        <span class="material-symbols-outlined text-sm sm:text-base">share</span>
                                                     </button>
-                                                    <button class="delete-btn p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 transition-colors" data-report="Campaign Performance Data">
-                                                        <span class="material-symbols-outlined text-base">delete</span>
+                                                    <button class="delete-btn p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 transition-colors min-h-[48px] sm:min-h-[40px]" data-report="Campaign Performance Data">
+                                                        <span class="material-symbols-outlined text-sm sm:text-base">delete</span>
                                                     </button>
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr class="border-b border-border-light dark:border-border-dark hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 dark:hover:from-purple-500/5 dark:hover:to-pink-500/5 transition-all duration-200">
-                                            <td class="px-6 py-4">
-                                                <div class="report-card p-3 rounded-lg">
-                                                    <div class="flex items-center gap-3">
-                                                        <div class="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center">
-                                                            <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-sm">insights</span>
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                                <div class="report-card p-2 sm:p-3 rounded-lg">
+                                                    <div class="flex items-center gap-2 sm:gap-3">
+                                                        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center">
+                                                            <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-xs sm:text-sm">insights</span>
                                                         </div>
-                                                        <div>
-                                                            <p class="font-semibold text-text-light dark:text-text-dark">Audience Demographics Analysis</p>
-                                                            <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Age, gender, location breakdown with behavioral insights</p>
+                                                        <div class="flex-1 min-w-0">
+                                                            <p class="font-semibold text-xs sm:text-sm text-text-light dark:text-text-dark truncate">Audience Demographics Analysis</p>
+                                                            <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark hidden sm:block">Age, gender, location breakdown with behavioral insights</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4">
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
                                                 <div>
-                                                    <p class="font-medium text-text-light dark:text-text-dark">Oct 25, 2024</p>
+                                                    <p class="font-medium text-xs sm:text-sm text-text-light dark:text-text-dark">Oct 25, 2024</p>
                                                     <p class="text-xs">11:45 AM</p>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4">
-                                                <span class="px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-500/20 text-purple-800 dark:text-purple-300 text-xs font-medium">Analytics</span>
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                                <span class="px-2 sm:px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-500/20 text-purple-800 dark:text-purple-300 text-xs font-medium">Analytics</span>
                                             </td>
-                                            <td class="px-6 py-4">
-                                                <span class="text-text-light dark:text-text-dark font-medium">1.8 MB</span>
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                                <span class="text-text-light dark:text-text-dark font-medium text-xs sm:text-sm">1.8 MB</span>
                                             </td>
-                                            <td class="px-6 py-4">
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
                                                 <div class="flex items-center gap-2">
                                                     <div class="w-2 h-2 rounded-full bg-green-500"></div>
                                                     <span class="text-green-700 dark:text-green-400 font-medium text-xs">Ready</span>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4">
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
                                                 <div class="flex items-center gap-1">
-                                                    <button class="download-btn p-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 transition-colors" data-report="Audience Demographics Analysis">
-                                                        <span class="material-symbols-outlined text-base">download</span>
+                                                    <button class="download-btn p-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 transition-colors min-h-[48px] sm:min-h-[40px]" data-report="Audience Demographics Analysis">
+                                                        <span class="material-symbols-outlined text-sm sm:text-base">download</span>
                                                     </button>
-                                                    <button class="share-btn p-2 rounded-lg hover:bg-green-100 dark:hover:bg-green-500/20 text-green-600 dark:text-green-400 transition-colors">
-                                                        <span class="material-symbols-outlined text-base">share</span>
+                                                    <button class="share-btn p-2 rounded-lg hover:bg-green-100 dark:hover:bg-green-500/20 text-green-600 dark:text-green-400 transition-colors min-h-[48px] sm:min-h-[40px]">
+                                                        <span class="material-symbols-outlined text-sm sm:text-base">share</span>
                                                     </button>
-                                                    <button class="delete-btn p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 transition-colors" data-report="Audience Demographics Analysis">
-                                                        <span class="material-symbols-outlined text-base">delete</span>
+                                                    <button class="delete-btn p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 transition-colors min-h-[48px] sm:min-h-[40px]" data-report="Audience Demographics Analysis">
+                                                        <span class="material-symbols-outlined text-sm sm:text-base">delete</span>
                                                     </button>
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr class="hover:bg-gradient-to-r hover:from-orange-50 hover:to-yellow-50 dark:hover:from-orange-500/5 dark:hover:to-yellow-500/5 transition-all duration-200">
-                                            <td class="px-6 py-4">
-                                                <div class="report-card p-3 rounded-lg">
-                                                    <div class="flex items-center gap-3">
-                                                        <div class="w-10 h-10 rounded-lg bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center">
-                                                            <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-sm">analytics</span>
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                                <div class="report-card p-2 sm:p-3 rounded-lg">
+                                                    <div class="flex items-center gap-2 sm:gap-3">
+                                                        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center">
+                                                            <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-xs sm:text-sm">analytics</span>
                                                         </div>
-                                                        <div>
-                                                            <p class="font-semibold text-text-light dark:text-text-dark">ROI & Financial Summary</p>
-                                                            <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Return on investment breakdown with forecasting</p>
+                                                        <div class="flex-1 min-w-0">
+                                                            <p class="font-semibold text-xs sm:text-sm text-text-light dark:text-text-dark truncate">ROI & Financial Summary</p>
+                                                            <p class="text-xs text-subtle-text-light dark:text-subtle-text-dark hidden sm:block">Return on investment breakdown with forecasting</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4">
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
                                                 <div>
-                                                    <p class="font-medium text-text-light dark:text-text-dark">Oct 24, 2024</p>
+                                                    <p class="font-medium text-xs sm:text-sm text-text-light dark:text-text-dark">Oct 24, 2024</p>
                                                     <p class="text-xs">3:22 PM</p>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4">
-                                                <span class="px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/20 text-orange-800 dark:text-orange-300 text-xs font-medium">Financial</span>
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                                <span class="px-2 sm:px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-500/20 text-orange-800 dark:text-orange-300 text-xs font-medium">Financial</span>
                                             </td>
-                                            <td class="px-6 py-4">
-                                                <span class="text-text-light dark:text-text-dark font-medium">3.1 MB</span>
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
+                                                <span class="text-text-light dark:text-text-dark font-medium text-xs sm:text-sm">3.1 MB</span>
                                             </td>
-                                            <td class="px-6 py-4">
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
                                                 <div class="flex items-center gap-2">
                                                     <div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
                                                     <span class="text-blue-700 dark:text-blue-400 font-medium text-xs">Generating</span>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4">
+                                            <td class="px-3 sm:px-6 py-3 sm:py-4">
                                                 <div class="flex items-center gap-1">
-                                                    <button class="p-2 rounded-lg text-gray-400 dark:text-gray-600 cursor-not-allowed" disabled>
-                                                        <span class="material-symbols-outlined text-base">download</span>
+                                                    <button class="p-2 rounded-lg text-gray-400 dark:text-gray-600 cursor-not-allowed min-h-[48px] sm:min-h-[40px]" disabled>
+                                                        <span class="material-symbols-outlined text-sm sm:text-base">download</span>
                                                     </button>
-                                                    <button class="p-2 rounded-lg text-gray-400 dark:text-gray-600 cursor-not-allowed" disabled>
-                                                        <span class="material-symbols-outlined text-base">share</span>
+                                                    <button class="p-2 rounded-lg text-gray-400 dark:text-gray-600 cursor-not-allowed min-h-[48px] sm:min-h-[40px]" disabled>
+                                                        <span class="material-symbols-outlined text-sm sm:text-base">share</span>
                                                     </button>
-                                                    <button class="delete-btn p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 transition-colors" data-report="ROI & Financial Summary">
-                                                        <span class="material-symbols-outlined text-base">delete</span>
+                                                    <button class="delete-btn p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600 dark:text-red-400 transition-colors min-h-[48px] sm:min-h-[40px]" data-report="ROI & Financial Summary">
+                                                        <span class="material-symbols-outlined text-sm sm:text-base">delete</span>
                                                     </button>
                                                 </div>
                                             </td>
@@ -736,11 +810,11 @@
                             </div>
                             
                             <!-- Enhanced Pagination -->
-                            <div class="flex items-center justify-between border-t border-border-light dark:border-border-dark p-6 text-sm">
+                            <div class="flex flex-col sm:flex-row items-center justify-between border-t border-border-light dark:border-border-dark p-4 sm:p-6 text-xs sm:text-sm gap-4">
                                 <span class="text-subtle-text-light dark:text-subtle-text-dark">Showing 1 to 4 of 247 reports</span>
-                                <div class="inline-flex items-center space-x-2">
+                                <div class="inline-flex items-center space-x-1 sm:space-x-2">
                                     <button class="rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-700/50 disabled:opacity-50 transition-colors" disabled="">
-                                        <span class="material-symbols-outlined text-base">chevron_left</span>
+                                        <span class="material-symbols-outlined text-sm sm:text-base">chevron_left</span>
                                     </button>
                                     <button class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold">1</button>
                                     <button class="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700/50 text-subtle-text-light dark:text-subtle-text-dark font-medium transition-colors">2</button>
@@ -748,7 +822,7 @@
                                     <span class="text-subtle-text-light dark:text-subtle-text-dark">...</span>
                                     <button class="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700/50 text-subtle-text-light dark:text-subtle-text-dark font-medium transition-colors">25</button>
                                     <button class="rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
-                                        <span class="material-symbols-outlined text-base">chevron_right</span>
+                                        <span class="material-symbols-outlined text-sm sm:text-base">chevron_right</span>
                                     </button>
                                 </div>
                             </div>
@@ -860,28 +934,89 @@
         </main>
     </div>
 
+    <!-- Footer -->
+    <footer class="fixed bottom-0 left-0 right-0 z-20 bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark">
+        <div class="px-4 py-3">
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-subtle-text-light dark:text-subtle-text-dark">© 2025 TABSONS. All rights reserved.</span>
+                <span class="text-xs text-subtle-text-light dark:text-subtle-text-dark">Version 1.0</span>
+            </div>
+        </div>
+    </footer>
+
     <script>
         // Apply theme immediately to prevent flash
         const savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.classList.toggle('dark', savedTheme === 'dark');
         
         document.addEventListener('DOMContentLoaded', function() {
+            // --- MOBILE MENU FUNCTIONALITY ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeMobileMenuBtn = document.getElementById('close-mobile-menu');
+
+            if (mobileMenuButton && mobileMenuOverlay) {
+                // Open mobile menu
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenuOverlay.classList.remove('hidden');
+                    setTimeout(() => {
+                        mobileMenu.style.transform = 'translateX(0)';
+                    }, 10);
+                });
+
+                // Close mobile menu
+                function closeMobileMenu() {
+                    mobileMenu.style.transform = 'translateX(-100%)';
+                    setTimeout(() => {
+                        mobileMenuOverlay.classList.add('hidden');
+                    }, 300);
+                }
+
+                if (closeMobileMenuBtn) {
+                    closeMobileMenuBtn.addEventListener('click', closeMobileMenu);
+                }
+
+                // Close menu when clicking overlay
+                mobileMenuOverlay.addEventListener('click', function(e) {
+                    if (e.target === mobileMenuOverlay) {
+                        closeMobileMenu();
+                    }
+                });
+
+                // Close menu when clicking on nav links
+                const mobileNavLinks = mobileMenu.querySelectorAll('a');
+                mobileNavLinks.forEach(link => {
+                    link.addEventListener('click', closeMobileMenu);
+                });
+            }
+
             // --- THEME TOGGLE ---
-            const themeToggle = document.getElementById('theme-toggle');
-            const themeIcon = document.getElementById('theme-icon');
-            const themeText = document.getElementById('theme-text');
+            const themeToggleDesktop = document.getElementById('theme-toggle-desktop');
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+            const themeIconDesktop = document.getElementById('theme-icon-desktop');
+            const themeIconMobile = document.getElementById('theme-icon-mobile');
+            const themeTextDesktop = document.getElementById('theme-text-desktop');
             
             function updateThemeUI() {
                 const isDark = document.documentElement.classList.contains('dark');
-                themeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
-                themeText.textContent = isDark ? 'Light' : 'Dark';
+                if (themeIconDesktop) themeIconDesktop.textContent = isDark ? 'light_mode' : 'dark_mode';
+                if (themeIconMobile) themeIconMobile.textContent = isDark ? 'light_mode' : 'dark_mode';
+                if (themeTextDesktop) themeTextDesktop.textContent = isDark ? 'Light' : 'Dark';
             }
             
-            themeToggle.addEventListener('click', function() {
+            function toggleTheme() {
                 const isDark = document.documentElement.classList.toggle('dark');
                 localStorage.setItem('theme', isDark ? 'dark' : 'light');
                 updateThemeUI();
-            });
+            }
+            
+            if (themeToggleDesktop) {
+                themeToggleDesktop.addEventListener('click', toggleTheme);
+            }
+            if (themeToggleMobile) {
+                themeToggleMobile.addEventListener('click', toggleTheme);
+            }
 
             // --- ENHANCED REPORT GENERATION ---
             const generateBtn = document.querySelector('.generate-report-btn');
@@ -991,7 +1126,7 @@
             function generateReportContent(name, dateRange, format, sources) {
                 return {
                     title: name,
-                    summary: `Marketing Analytics Report for ${dateRange}`,
+                    summary: `Media Advertisement Report for ${dateRange}`,
                     metrics: {
                         totalCampaigns: 12,
                         totalSpend: '$284,500',
@@ -1083,7 +1218,7 @@ DATA SOURCES
 ============
 ${data.content.dataSources.join(', ') || 'All available sources'}
 
-Generated by Marketing Analytics Dashboard`;
+Generated by Media Advertisement Dashboard`;
             }
             
             function generateExcelContent(data) {
